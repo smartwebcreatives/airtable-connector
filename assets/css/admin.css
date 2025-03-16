@@ -1,0 +1,203 @@
+/**
+ * Admin CSS for Airtable Connector
+ */
+
+/* Layout and structure */
+.airtable-connector-admin {
+    margin: 20px 0;
+}
+
+.airtable-admin-header {
+    margin-bottom: 20px;
+}
+
+.airtable-settings-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.airtable-column {
+    flex: 1;
+    min-width: 320px;
+}
+
+/* Cards & content containers */
+.airtable-card {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ccd0d4;
+    border-radius: 3px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+
+.airtable-card h2 {
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 1.3em;
+}
+
+/* Form elements */
+.airtable-form-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.airtable-form-table th {
+    text-align: left;
+    padding: 15px 10px 15px 0;
+    width: 200px;
+    font-weight: 600;
+    vertical-align: top;
+}
+
+.airtable-form-table td {
+    padding: 15px 10px;
+    vertical-align: top;
+}
+
+/* Filters */
+#airtable-filters-container {
+    margin-bottom: 15px;
+}
+
+.filter-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.filter-row input.filter-field,
+.filter-row input.filter-value {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.filter-row button.remove-filter {
+    flex: 0 0 auto;
+}
+
+.filter-description {
+    margin-top: 10px !important;
+    color: #666;
+}
+
+/* Highlight for filter fields */
+.filter-row input.filter-field:focus,
+.filter-row input.filter-value:focus {
+    border-color: #2271b1;
+    box-shadow: 0 0 0 1px #2271b1;
+}
+
+/* Fields selector */
+#fields-selector {
+    margin-top: 15px;
+    background: #f9f9f9;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.field-checkbox {
+    display: inline-block;
+    margin-right: 15px;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 3px;
+}
+
+.field-checkbox:hover {
+    background: #f0f0f0;
+}
+
+.no-fields-message {
+    color: #666;
+    font-style: italic;
+}
+
+/* API Response section */
+.airtable-success {
+    color: #0a7c18;
+    background: #f0fff4;
+    border: 1px solid #c3e6cb;
+    padding: 15px;
+    border-radius: 3px;
+    margin-bottom: 15px;
+}
+
+.airtable-error {
+    color: #721c24;
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 15px;
+    border-radius: 3px;
+    margin-bottom: 15px;
+}
+
+.api-response-json {
+    background: #f8f8f8;
+    padding: 15px;
+    border: 1px solid #ddd;
+    max-height: 500px;
+    overflow: auto;
+    font-family: monospace;
+    font-size: 12px;
+    border-radius: 3px;
+}
+
+.api-response-json pre {
+    margin: 0;
+    white-space: pre-wrap;
+}
+
+.filter-list {
+    margin: 5px 0 10px 20px;
+    color: #0a7c18;
+}
+
+#connection-status {
+    margin-left: 10px;
+    display: inline-block;
+}
+
+/* Status messages */
+.no-data-message {
+    color: #666;
+    font-style: italic;
+}
+
+/* Button spacing */
+.submit {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 782px) {
+    .airtable-form-table th {
+        width: auto;
+        display: block;
+        padding-bottom: 0;
+    }
+    
+    .airtable-form-table td {
+        display: block;
+    }
+    
+    .filter-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filter-row input.filter-field,
+    .filter-row input.filter-value {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+}
