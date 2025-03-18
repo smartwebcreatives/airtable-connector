@@ -251,4 +251,6 @@ $options = $options ?? [];
             </div>
         </div>
     </div>
+    <?php include_once AIRTABLE_CONNECTOR_PLUGIN_DIR . 'includes/templates/cache-settings.php'; ?>
+<?php include_once AIRTABLE_CONNECTOR_PLUGIN_DIR . 'includes/templates/auto-refresh-settings.php'; ?>
 </div>
