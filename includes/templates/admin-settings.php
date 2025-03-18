@@ -168,6 +168,80 @@ $options = $options ?? [];
                     </div>
                 </div>
                 
+                <!-- Cache Settings -->
+                <div class="airtable-card">
+                    <h2><?php _e('Cache Settings', 'airtable-connector'); ?></h2>
+                    <table class="form-table airtable-form-table">
+                        <tr>
+                            <th scope="row">
+                                <label for="enable_cache"><?php _e('Enable Cache', 'airtable-connector'); ?></label>
+                            </th>
+                            <td>
+                                <input type="checkbox" id="enable_cache" name="enable_cache" value="1" 
+                                       <?php checked(!empty($options['enable_cache'])); ?>>
+                                <span class="description">
+                                    <?php _e('Cache API responses to improve performance.', 'airtable-connector'); ?>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <label for="cache_time"><?php _e('Cache Duration', 'airtable-connector'); ?></label>
+                            </th>
+                            <td>
+                                <input type="number" id="cache_time" name="cache_time" 
+                                       value="<?php echo esc_attr($options['cache_time'] ?? '5'); ?>" min="1" max="1440" class="small-text">
+                                <span class="description">
+                                    <?php _e('Time in minutes before cache expires.', 'airtable-connector'); ?>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <label for="show_cache_info"><?php _e('Show Cache Info', 'airtable-connector'); ?></label>
+                            </th>
+                            <td>
+                                <input type="checkbox" id="show_cache_info" name="show_cache_info" value="1" 
+                                       <?php checked(!empty($options['show_cache_info'])); ?>>
+                                <span class="description">
+                                    <?php _e('Show last updated timestamp in output.', 'airtable-connector'); ?>
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <!-- Auto-Refresh Settings -->
+                <div class="airtable-card">
+                    <h2><?php _e('Auto-Refresh Settings', 'airtable-connector'); ?></h2>
+                    <table class="form-table airtable-form-table">
+                        <tr>
+                            <th scope="row">
+                                <label for="enable_auto_refresh"><?php _e('Enable Auto-Refresh', 'airtable-connector'); ?></label>
+                            </th>
+                            <td>
+                                <input type="checkbox" id="enable_auto_refresh" name="enable_auto_refresh" value="1" 
+                                       <?php checked(!empty($options['enable_auto_refresh'])); ?>>
+                                <span class="description">
+                                    <?php _e('Automatically reload the page to refresh data.', 'airtable-connector'); ?>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <label for="auto_refresh_interval"><?php _e('Refresh Interval', 'airtable-connector'); ?></label>
+                            </th>
+                            <td>
+                                <input type="number" id="auto_refresh_interval" name="auto_refresh_interval" 
+                                       value="<?php echo esc_attr($options['auto_refresh_interval'] ?? '60'); ?>" min="5" max="3600" class="small-text">
+                                <span class="description">
+                                    <?php _e('Time in seconds between page refreshes.', 'airtable-connector'); ?>
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                
                 <!-- Shortcode Usage -->
                 <div class="airtable-card">
                     <h2><?php _e('Shortcode Usage', 'airtable-connector'); ?></h2>
@@ -176,13 +250,13 @@ $options = $options ?? [];
                         <code>[airtable_simple title="My Data" columns="3"]</code>
                     </p>
                     <p class="description">
-    <?php _e('Parameters:', 'airtable-connector'); ?><br>
-    <code>title</code> - <?php _e('Title to display above the data', 'airtable-connector'); ?><br>
-    <code>columns</code> - <?php _e('Number of columns to display (default: 3)', 'airtable-connector'); ?><br>
-    <code>filter_field</code> - <?php _e('Override the filter field setting', 'airtable-connector'); ?><br>
-    <code>filter_value</code> - <?php _e('Override the filter value setting', 'airtable-connector'); ?><br>
-    <code>refresh</code> - <?php _e('Set to "yes" to bypass cache (default: "no")', 'airtable-connector'); ?>
-</p>
+                        <?php _e('Parameters:', 'airtable-connector'); ?><br>
+                        <code>title</code> - <?php _e('Title to display above the data', 'airtable-connector'); ?><br>
+                        <code>columns</code> - <?php _e('Number of columns to display (default: 3)', 'airtable-connector'); ?><br>
+                        <code>filter_field</code> - <?php _e('Override the filter field setting', 'airtable-connector'); ?><br>
+                        <code>filter_value</code> - <?php _e('Override the filter value setting', 'airtable-connector'); ?><br>
+                        <code>refresh</code> - <?php _e('Set to "yes" to bypass cache (default: "no")', 'airtable-connector'); ?>
+                    </p>
                 </div>
                 
                 <p class="submit">
@@ -252,6 +326,19 @@ $options = $options ?? [];
             </div>
         </div>
     </div>
-    <?php include_once AIRTABLE_CONNECTOR_PLUGIN_DIR . 'includes/templates/cache-settings.php'; ?>
-<?php include_once AIRTABLE_CONNECTOR_PLUGIN_DIR . 'includes/templates/auto-refresh-settings.php'; ?>
+    
+    <!-- Clear Cache Button Outside the Main Settings Form -->
+    <form method="post" action="" class="clear-cache-form">
+        <div class="airtable-card">
+            <h2><?php _e('Cache Management', 'airtable-connector'); ?></h2>
+            <p>
+                <button type="submit" name="clear_cache" class="button">
+                    <?php _e('Clear All Cache', 'airtable-connector'); ?>
+                </button>
+                <span class="description">
+                    <?php _e('Remove all cached Airtable data.', 'airtable-connector'); ?>
+                </span>
+            </p>
+        </div>
+    </form>
 </div>

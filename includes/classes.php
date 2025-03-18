@@ -517,11 +517,11 @@ public function settings_page() {
         'fields_to_display' => [],
         'filters' => [],
         'last_api_response' => [],
-        'enable_cache' => '1',           // Enable cache by default
-        'cache_time' => '5',             // 5 minutes cache time
-        'show_cache_info' => '1',        // Show cache info by default
-        'enable_auto_refresh' => '',     // Auto-refresh disabled by default
-        'auto_refresh_interval' => '60'  // 60 seconds refresh interval
+        'enable_cache' => '1',
+        'cache_time' => '5',
+        'show_cache_info' => '1',
+        'enable_auto_refresh' => '',
+        'auto_refresh_interval' => '60'
     ];
     
     // Get saved options with defaults as fallback
@@ -530,20 +530,20 @@ public function settings_page() {
     // Ensure all expected keys exist in the options array
     $options = wp_parse_args($options, $default_options);
     
-    // Save options if form is submitted
-    if (isset($_POST['save_settings'])) {
-        $options['api_key'] = sanitize_text_field($_POST['api_key']);
-        $options['base_id'] = sanitize_text_field($_POST['base_id']);
-        $options['table_name'] = sanitize_text_field($_POST['table_name']);
+    // Check for POST submission - more explicit check for the submit button
+    if (isset($_POST['submit']) || isset($_POST['save_settings'])) {
+        // API settings
+        $options['api_key'] = isset($_POST['api_key']) ? sanitize_text_field($_POST['api_key']) : '';
+        $options['base_id'] = isset($_POST['base_id']) ? sanitize_text_field($_POST['base_id']) : '';
+        $options['table_name'] = isset($_POST['table_name']) ? sanitize_text_field($_POST['table_name']) : '';
         
-        // Process multiple filters
+        // Process filters
         $filters = [];
         if (isset($_POST['filters']) && is_array($_POST['filters'])) {
             foreach ($_POST['filters'] as $filter) {
                 $field = isset($filter['field']) ? sanitize_text_field($filter['field']) : '';
                 $value = isset($filter['value']) ? sanitize_text_field($filter['value']) : '';
                 
-                // Only add if both field and value are provided
                 if (!empty($field) && $value !== '') {
                     $filters[] = [
                         'field' => $field,
@@ -554,7 +554,7 @@ public function settings_page() {
         }
         $options['filters'] = $filters;
         
-        // Handle fields to display - important for sanitization
+        // Fields to display
         if (isset($_POST['fields_to_display']) && is_array($_POST['fields_to_display'])) {
             $fields_to_display = [];
             foreach ($_POST['fields_to_display'] as $field) {
@@ -565,26 +565,31 @@ public function settings_page() {
             $options['fields_to_display'] = [];
         }
         
-        // Handle cache settings - fixed to properly handle checkbox values
+        // Cache settings - explicit handling
         $options['enable_cache'] = isset($_POST['enable_cache']) ? '1' : '';
-        $options['cache_time'] = isset($_POST['cache_time']) ? 
-                               max(1, min(1440, intval($_POST['cache_time']))) : 5; // Validate min/max
+        $options['cache_time'] = isset($_POST['cache_time']) ? intval($_POST['cache_time']) : 5;
+        // Enforce minimum/maximum values
+        $options['cache_time'] = max(1, min(1440, $options['cache_time']));
         $options['show_cache_info'] = isset($_POST['show_cache_info']) ? '1' : '';
         
-        // Handle auto-refresh settings - fixed to properly handle checkbox values
+        // Auto-refresh settings - explicit handling
         $options['enable_auto_refresh'] = isset($_POST['enable_auto_refresh']) ? '1' : '';
-        $options['auto_refresh_interval'] = isset($_POST['auto_refresh_interval']) ? 
-                                          max(5, min(3600, intval($_POST['auto_refresh_interval']))) : 60; // Validate min/max
+        $options['auto_refresh_interval'] = isset($_POST['auto_refresh_interval']) ? intval($_POST['auto_refresh_interval']) : 60;
+        // Enforce minimum/maximum values
+        $options['auto_refresh_interval'] = max(5, min(3600, $options['auto_refresh_interval']));
+        
+        // Debug output (can be removed in production)
+        error_log('Saving Airtable Connector settings: ' . print_r($options, true));
         
         // Clear cache if settings were changed
         if ($this->cache) {
             $this->cache->clear_cache();
         }
         
-        // Save the options to the database
+        // Save the options
         update_option(AIRTABLE_CONNECTOR_OPTIONS_KEY, $options);
         
-        echo '<div class="notice notice-success is-dismissible"><p>Settings saved.</p></div>';
+        echo '<div class="notice notice-success is-dismissible"><p>Settings saved successfully.</p></div>';
     }
     
     // Include the admin template
