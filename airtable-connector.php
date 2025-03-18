@@ -59,16 +59,10 @@ function airtable_connector_activate() {
     }
 }
 
-// Include all classes if they exist
+// This function is now obsolete and can be replaced if needed
 function airtable_connector_load_files() {
-    $classes_file = AIRTABLE_CONNECTOR_PLUGIN_DIR . 'includes/classes.php';
-    
-    if (file_exists($classes_file)) {
-        require_once $classes_file;
-        return true;
-    }
-    
-    return false;
+    // The loader class now handles loading all required files
+    return true;
 }
 
 // Initialize plugin  
@@ -76,19 +70,14 @@ function airtable_connector_init() {
     // Ensure files and directories exist
     airtable_connector_ensure_directories();
     
-    // Try to load classes
-    if (airtable_connector_load_files()) {
-        // Create instances  
-        $api = new Airtable_Connector_API();  
-        $cache = new Airtable_Connector_Cache();  
-        $shortcode = new Airtable_Connector_Shortcode($api, $cache);  
-          
-        // Load admin only when needed  
-        if (is_admin()) {  
-            $admin = new Airtable_Connector_Admin($api, $cache);  
-        }
-    } else {
-        // Add an admin notice if files are missing
+    // Load the main loader class
+    require_once AIRTABLE_CONNECTOR_PLUGIN_DIR . 'includes/class-airtable-connector-loader.php';
+    
+    // Initialize the plugin components through the loader
+    $loader = Airtable_Connector_Loader::get_instance();
+    
+    // If loader failed, show admin notice
+    if (null === $loader) {
         add_action('admin_notices', 'airtable_connector_missing_files_notice');
     }
 }
