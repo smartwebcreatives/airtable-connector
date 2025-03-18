@@ -242,30 +242,114 @@ $options = $options ?? [];
                     </table>
                 </div>
                 
-                <!-- Shortcode Usage -->
-                <div class="airtable-card">
-                    <h2><?php _e('Shortcode Usage', 'airtable-connector'); ?></h2>
-                    <p>
-                        <?php _e('Use this shortcode to display Airtable data:', 'airtable-connector'); ?>
-                        <code>[airtable_simple title="My Data" columns="3"]</code>
-                    </p>
-                    <p class="description">
-                        <?php _e('Parameters:', 'airtable-connector'); ?><br>
-                        <code>title</code> - <?php _e('Title to display above the data', 'airtable-connector'); ?><br>
-                        <code>columns</code> - <?php _e('Number of columns to display (default: 3)', 'airtable-connector'); ?><br>
-                        <code>filter_field</code> - <?php _e('Override the filter field setting', 'airtable-connector'); ?><br>
-                        <code>filter_value</code> - <?php _e('Override the filter value setting', 'airtable-connector'); ?><br>
-                        <code>refresh</code> - <?php _e('Set to "yes" to bypass cache (default: "no")', 'airtable-connector'); ?>
-                    </p>
-                </div>
-                
-                <p class="submit">
-                    <button type="submit" name="save_settings" class="button-primary">
-                        <?php _e('Save Settings', 'airtable-connector'); ?>
-                    </button>
-                </p>
-            </form>
-        </div>
+                <?php
+/**
+ * Admin settings template - Shortcode Documentation Section
+ * 
+ * This is part of the admin-settings.php file
+ * Replace the existing Shortcode Usage card with this updated version
+ */
+
+// The following code should replace the existing Shortcode Usage card in includes/templates/admin-settings.php
+?>
+
+<!-- Shortcode Usage -->
+<div class="airtable-card">
+    <h2><?php _e('Shortcode Usage', 'airtable-connector'); ?></h2>
+    <p>
+        <?php _e('Basic usage:', 'airtable-connector'); ?>
+        <code>[airtable_simple]</code>
+    </p>
+    
+    <p>
+        <?php _e('Full example with all parameters:', 'airtable-connector'); ?>
+        <code>[airtable_simple title="My Data" grid="d3,t2,ml2,m1" filter_field="Status" filter_value="Active" show_refresh_button="yes" show_countdown="yes" show_last_updated="yes" auto_refresh="yes" auto_refresh_interval="30" id="my-table"]</code>
+    </p>
+    
+    <p class="description">
+        <?php _e('Available parameters:', 'airtable-connector'); ?>
+    </p>
+    
+    <table class="wp-list-table widefat fixed striped" style="margin-top: 10px;">
+        <thead>
+            <tr>
+                <th><?php _e('Parameter', 'airtable-connector'); ?></th>
+                <th><?php _e('Description', 'airtable-connector'); ?></th>
+                <th><?php _e('Default', 'airtable-connector'); ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>title</code></td>
+                <td><?php _e('Title to display above the data', 'airtable-connector'); ?></td>
+                <td>"Airtable Data"</td>
+            </tr>
+            <tr>
+                <td><code>columns</code></td>
+                <td><?php _e('Number of columns to display (simple version of grid parameter)', 'airtable-connector'); ?></td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td><code>grid</code></td>
+                <td>
+                    <?php _e('Responsive grid layout with format "d3,t2,ml2,m1":', 'airtable-connector'); ?><br>
+                    <ul style="margin-top: 5px; margin-left: 15px;">
+                        <li>d3 = desktop (3 columns)</li>
+                        <li>t2 = tablet (2 columns)</li>
+                        <li>ml2 = mobile landscape (2 columns)</li>
+                        <li>m1 = mobile portrait (1 column)</li>
+                    </ul>
+                </td>
+                <td>"d3,t2,ml2,m1"</td>
+            </tr>
+            <tr>
+                <td><code>filter_field</code></td>
+                <td><?php _e('Override the filter field setting', 'airtable-connector'); ?></td>
+                <td>empty</td>
+            </tr>
+            <tr>
+                <td><code>filter_value</code></td>
+                <td><?php _e('Override the filter value setting', 'airtable-connector'); ?></td>
+                <td>empty</td>
+            </tr>
+            <tr>
+                <td><code>refresh</code></td>
+                <td><?php _e('Set to "yes" to bypass cache (one-time refresh)', 'airtable-connector'); ?></td>
+                <td>"no"</td>
+            </tr>
+            <tr>
+                <td><code>show_refresh_button</code></td>
+                <td><?php _e('Set to "yes" to show a manual refresh button', 'airtable-connector'); ?></td>
+                <td>"no"</td>
+            </tr>
+            <tr>
+                <td><code>show_countdown</code></td>
+                <td><?php _e('Set to "yes" to show countdown timer until next refresh', 'airtable-connector'); ?></td>
+                <td>"no"</td>
+            </tr>
+            <tr>
+                <td><code>show_last_updated</code></td>
+                <td><?php _e('Set to "yes" or "no" to override global setting for displaying last updated timestamp', 'airtable-connector'); ?></td>
+                <td>uses global setting</td>
+            </tr>
+            <tr>
+                <td><code>auto_refresh</code></td>
+                <td><?php _e('Set to "yes" or "no" to override global setting for auto-refresh', 'airtable-connector'); ?></td>
+                <td>uses global setting</td>
+            </tr>
+            <tr>
+                <td><code>auto_refresh_interval</code></td>
+                <td><?php _e('Time in seconds between auto-refreshes (5-3600)', 'airtable-connector'); ?></td>
+                <td>uses global setting</td>
+            </tr>
+            <tr>
+                <td><code>id</code></td>
+                <td><?php _e('Custom ID for the shortcode instance (useful for multiple shortcodes on same page)', 'airtable-connector'); ?></td>
+                <td>auto-generated</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
         
         <!-- Data Column -->
         <div class="airtable-column">

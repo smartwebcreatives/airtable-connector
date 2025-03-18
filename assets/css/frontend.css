@@ -1,0 +1,130 @@
+/**
+ * Frontend CSS for Airtable Connector
+ */
+
+/* Container */
+.airtable-connector-container {
+    margin: 20px 0;
+}
+
+/* Header */
+.airtable-title {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+}
+
+/* Filter information */
+.airtable-filter-info {
+    margin-bottom: 15px;
+    font-style: italic;
+    color: #666;
+}
+
+.airtable-filter-list {
+    margin: 5px 0 10px 20px;
+    padding-left: 20px;
+}
+
+.airtable-record-count {
+    font-weight: bold;
+}
+
+/* Controls section */
+.airtable-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f8f8f8;
+    border: 1px solid #e5e5e5;
+    border-radius: 3px;
+}
+
+/* Last updated */
+.airtable-last-updated {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.airtable-last-updated span {
+    font-weight: bold;
+}
+
+/* Update now button */
+.airtable-update-now {
+    background-color: #0073aa;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.airtable-update-now:hover {
+    background-color: #006291;
+}
+
+.airtable-update-now:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Countdown timer */
+.airtable-countdown {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.airtable-timer {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Grid items */
+.airtable-item {
+    border: 1px solid #e5e5e5;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 3px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.airtable-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Field styling */
+.airtable-field {
+    margin-bottom: 10px;
+}
+
+.airtable-field:last-child {
+    margin-bottom: 0;
+}
+
+.airtable-field-label {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    .airtable-controls {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .airtable-controls > div,
+    .airtable-controls > button {
+        margin-bottom: 10px;
+    }
+    
+    .airtable-controls > *:last-child {
+        margin-bottom: 0;
+    }
+}

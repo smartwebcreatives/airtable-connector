@@ -62,6 +62,15 @@ class Airtable_Connector_Cache {
     }
     
     /**
+     * Clear specific cache based on options
+     * This allows targeted cache clearing for the "Update Now" button
+     */
+    public function clear_specific_cache($options) {
+        $cache_key = $this->get_cache_key($options);
+        return delete_transient($cache_key);
+    }
+    
+    /**
      * Clear all Airtable cache
      */
     public function clear_cache() {

@@ -79,6 +79,22 @@ function airtable_connector_init() {
     // If loader failed, show admin notice
     if (null === $loader) {
         add_action('admin_notices', 'airtable_connector_missing_files_notice');
+
+        // Create empty frontend JS file if it doesn't exist
+$frontend_js_file = AIRTABLE_CONNECTOR_PLUGIN_DIR . 'assets/js/frontend.js';
+if (!file_exists($frontend_js_file)) {
+    file_put_contents($frontend_js_file, '/**
+ * Frontend JavaScript for Airtable Connector
+ */');
+}
+
+// Create empty frontend CSS file if it doesn't exist
+$frontend_css_file = AIRTABLE_CONNECTOR_PLUGIN_DIR . 'assets/css/frontend.css';
+if (!file_exists($frontend_css_file)) {
+    file_put_contents($frontend_css_file, '/**
+ * Frontend CSS for Airtable Connector
+ */');
+}
     }
 }
 
