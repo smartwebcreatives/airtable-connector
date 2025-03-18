@@ -47,18 +47,19 @@ class Airtable_Connector_Loader {
     }
     
     /**
-     * Load all required files
-     */
-    private function load_dependencies() {
-        // Load individual class files instead of classes.php
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-airtable-connector-api.php';
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-airtable-connector-cache.php';
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-airtable-connector-shortcode.php';
-        
-        if (is_admin()) {
-            require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-airtable-connector-admin.php';
-        }
+ * Load all required files
+ */
+private function load_dependencies() {
+    // Load individual class files instead of classes.php
+    require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-airtable-connector-options.php';
+    require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-airtable-connector-api.php';
+    require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-airtable-connector-cache.php';
+    require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-airtable-connector-shortcode.php';
+    
+    if (is_admin()) {
+        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-airtable-connector-admin.php';
     }
+}
     
     /**
      * Initialize all components
