@@ -481,46 +481,61 @@ $default_options = [
         // Ensure all expected keys exist in the options array
         $options = wp_parse_args($options, $default_options);
         
-        // Save options if form is submitted
-        if (isset($_POST['save_settings'])) {
-            $options['api_key'] = sanitize_text_field($_POST['api_key']);
-            $options['base_id'] = sanitize_text_field($_POST['base_id']);
-            $options['table_name'] = sanitize_text_field($_POST['table_name']);
+      // Save options if form is submitted
+if (isset($_POST['save_settings'])) {
+    $options['api_key'] = sanitize_text_field($_POST['api_key']);
+    $options['base_id'] = sanitize_text_field($_POST['base_id']);
+    $options['table_name'] = sanitize_text_field($_POST['table_name']);
+    
+    // Process multiple filters
+    $filters = [];
+    if (isset($_POST['filters']) && is_array($_POST['filters'])) {
+        foreach ($_POST['filters'] as $filter) {
+            $field = isset($filter['field']) ? sanitize_text_field($filter['field']) : '';
+            $value = isset($filter['value']) ? sanitize_text_field($filter['value']) : '';
             
-            // Process multiple filters
-            $filters = [];
-            if (isset($_POST['filters']) && is_array($_POST['filters'])) {
-                foreach ($_POST['filters'] as $filter) {
-                    $field = isset($filter['field']) ? sanitize_text_field($filter['field']) : '';
-                    $value = isset($filter['value']) ? sanitize_text_field($filter['value']) : '';
-                    
-                    // Only add if both field and value are provided
-                    if (!empty($field) && $value !== '') {
-                        $filters[] = [
-                            'field' => $field,
-                            'value' => $value
-                        ];
-                    }
-                }
+            // Only add if both field and value are provided
+            if (!empty($field) && $value !== '') {
+                $filters[] = [
+                    'field' => $field,
+                    'value' => $value
+                ];
             }
-            $options['filters'] = $filters;
-            
-            // Handle fields to display - important for sanitization
-            if (isset($_POST['fields_to_display']) && is_array($_POST['fields_to_display'])) {
-                $fields_to_display = [];
-                foreach ($_POST['fields_to_display'] as $field) {
-                    $fields_to_display[] = sanitize_text_field($field);
-                }
-                $options['fields_to_display'] = $fields_to_display;
-            } else {
-                $options['fields_to_display'] = [];
-            }
-            
-            // Save the options to the database
-            update_option(AIRTABLE_CONNECTOR_OPTIONS_KEY, $options);
-            
-            echo '<div class="notice notice-success is-dismissible"><p>Settings saved.</p></div>';
         }
+    }
+    $options['filters'] = $filters;
+    
+    // Handle fields to display - important for sanitization
+    if (isset($_POST['fields_to_display']) && is_array($_POST['fields_to_display'])) {
+        $fields_to_display = [];
+        foreach ($_POST['fields_to_display'] as $field) {
+            $fields_to_display[] = sanitize_text_field($field);
+        }
+        $options['fields_to_display'] = $fields_to_display;
+    } else {
+        $options['fields_to_display'] = [];
+    }
+    
+    // Handle cache settings
+    $options['enable_cache'] = isset($_POST['enable_cache']) ? '1' : '';
+    $options['cache_time'] = isset($_POST['cache_time']) ? intval($_POST['cache_time']) : 5;
+    $options['show_cache_info'] = isset($_POST['show_cache_info']) ? '1' : '';
+    
+    // Handle auto-refresh settings
+    $options['enable_auto_refresh'] = isset($_POST['enable_auto_refresh']) ? '1' : '';
+    $options['auto_refresh_interval'] = isset($_POST['auto_refresh_interval']) ? 
+                                       intval($_POST['auto_refresh_interval']) : 60;
+    
+    // Clear cache if settings were changed
+    if ($this->cache) {
+        $this->cache->clear_cache();
+    }
+    
+    // Save the options to the database
+    update_option(AIRTABLE_CONNECTOR_OPTIONS_KEY, $options);
+    
+    echo '<div class="notice notice-success is-dismissible"><p>Settings saved.</p></div>';
+}
         
         // Include the admin template
         include_once AIRTABLE_CONNECTOR_PLUGIN_DIR . 'includes/templates/admin-settings.php';
