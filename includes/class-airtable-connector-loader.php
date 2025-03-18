@@ -1,6 +1,17 @@
 <?php
 /**
  * Loader class to manage all plugin components
+ *
+ * @package Airtable_Connector
+ */
+
+// Exit if accessed directly
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+/**
+ * Loader class to manage all plugin components
  */
 class Airtable_Connector_Loader {
     
@@ -39,6 +50,7 @@ class Airtable_Connector_Loader {
      * Load all required files
      */
     private function load_dependencies() {
+        // Load individual class files instead of classes.php
         require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-airtable-connector-api.php';
         require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-airtable-connector-cache.php';
         require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-airtable-connector-shortcode.php';
