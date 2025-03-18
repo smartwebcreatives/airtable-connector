@@ -294,14 +294,6 @@ public function __construct($api, $cache = null) {
  * Handles admin settings page
  */
 class Airtable_Connector_Admin {
-
-    // Process clear cache action
-if (isset($_POST['clear_cache']) && $this->cache) {
-    $count = $this->cache->clear_cache();
-    echo '<div class="notice notice-success is-dismissible"><p>' . 
-         sprintf(_n('%s cache entry cleared.', '%s cache entries cleared.', $count, 'airtable-connector'), 
-         number_format_i18n($count)) . '</p></div>';
-}
     
     /**
      * API instance
@@ -462,6 +454,13 @@ public function __construct($api, $cache = null) {
      * Settings page
      */
     public function settings_page() {
+       // Process clear cache action
+if (isset($_POST['clear_cache']) && $this->cache) {
+    $count = $this->cache->clear_cache();
+    echo '<div class="notice notice-success is-dismissible"><p>' . 
+         sprintf(_n('%s cache entry cleared.', '%s cache entries cleared.', $count, 'airtable-connector'), 
+         number_format_i18n($count)) . '</p></div>';
+} 
         // Check if we need to reset options
         if (isset($_GET['reset']) && $_GET['reset'] === '1') {
             $this->reset_options();
