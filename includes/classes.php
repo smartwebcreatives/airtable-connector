@@ -491,103 +491,105 @@ public function __construct($api, $cache = null) {
         update_option(AIRTABLE_CONNECTOR_OPTIONS_KEY, $default_options);
     }
     
-    /**
-     * Settings page
-     */
-    public function settings_page() {
-       // Process clear cache action
-if (isset($_POST['clear_cache']) && $this->cache) {
-    $count = $this->cache->clear_cache();
-    echo '<div class="notice notice-success is-dismissible"><p>' . 
-         sprintf(_n('%s cache entry cleared.', '%s cache entries cleared.', $count, 'airtable-connector'), 
-         number_format_i18n($count)) . '</p></div>';
-} 
-        // Check if we need to reset options
-        if (isset($_GET['reset']) && $_GET['reset'] === '1') {
-            $this->reset_options();
-            echo '<div class="notice notice-success is-dismissible"><p>All settings have been reset to defaults.</p></div>';
-        }
-        
-      // Define default options
-$default_options = [
-    'api_key' => '',
-    'base_id' => '',
-    'table_name' => '',
-    'fields_to_display' => [],
-    'filters' => [],
-    'last_api_response' => [],
-    'enable_cache' => '1',           // Enable cache by default
-    'cache_time' => '5',             // 5 minutes cache time
-    'show_cache_info' => '1',        // Show cache info by default
-    'enable_auto_refresh' => '',     // Auto-refresh disabled by default
-    'auto_refresh_interval' => '60'  // 60 seconds refresh interval
-];
-        
-        // Get saved options with defaults as fallback
-        $options = get_option(AIRTABLE_CONNECTOR_OPTIONS_KEY, $default_options);
-        
-        // Ensure all expected keys exist in the options array
-        $options = wp_parse_args($options, $default_options);
-        
-     // Save options if form is submitted
-if (isset($_POST['save_settings'])) {
-    $options['api_key'] = sanitize_text_field($_POST['api_key']);
-    $options['base_id'] = sanitize_text_field($_POST['base_id']);
-    $options['table_name'] = sanitize_text_field($_POST['table_name']);
+/**
+ * Settings page
+ */
+public function settings_page() {
+    // Process clear cache action
+    if (isset($_POST['clear_cache']) && $this->cache) {
+        $count = $this->cache->clear_cache();
+        echo '<div class="notice notice-success is-dismissible"><p>' . 
+             sprintf(_n('%s cache entry cleared.', '%s cache entries cleared.', $count, 'airtable-connector'), 
+             number_format_i18n($count)) . '</p></div>';
+    } 
     
-    // Process multiple filters
-    $filters = [];
-    if (isset($_POST['filters']) && is_array($_POST['filters'])) {
-        foreach ($_POST['filters'] as $filter) {
-            $field = isset($filter['field']) ? sanitize_text_field($filter['field']) : '';
-            $value = isset($filter['value']) ? sanitize_text_field($filter['value']) : '';
-            
-            // Only add if both field and value are provided
-            if (!empty($field) && $value !== '') {
-                $filters[] = [
-                    'field' => $field,
-                    'value' => $value
-                ];
+    // Check if we need to reset options
+    if (isset($_GET['reset']) && $_GET['reset'] === '1') {
+        $this->reset_options();
+        echo '<div class="notice notice-success is-dismissible"><p>All settings have been reset to defaults.</p></div>';
+    }
+    
+    // Define default options
+    $default_options = [
+        'api_key' => '',
+        'base_id' => '',
+        'table_name' => '',
+        'fields_to_display' => [],
+        'filters' => [],
+        'last_api_response' => [],
+        'enable_cache' => '1',           // Enable cache by default
+        'cache_time' => '5',             // 5 minutes cache time
+        'show_cache_info' => '1',        // Show cache info by default
+        'enable_auto_refresh' => '',     // Auto-refresh disabled by default
+        'auto_refresh_interval' => '60'  // 60 seconds refresh interval
+    ];
+    
+    // Get saved options with defaults as fallback
+    $options = get_option(AIRTABLE_CONNECTOR_OPTIONS_KEY, $default_options);
+    
+    // Ensure all expected keys exist in the options array
+    $options = wp_parse_args($options, $default_options);
+    
+    // Save options if form is submitted
+    if (isset($_POST['save_settings'])) {
+        $options['api_key'] = sanitize_text_field($_POST['api_key']);
+        $options['base_id'] = sanitize_text_field($_POST['base_id']);
+        $options['table_name'] = sanitize_text_field($_POST['table_name']);
+        
+        // Process multiple filters
+        $filters = [];
+        if (isset($_POST['filters']) && is_array($_POST['filters'])) {
+            foreach ($_POST['filters'] as $filter) {
+                $field = isset($filter['field']) ? sanitize_text_field($filter['field']) : '';
+                $value = isset($filter['value']) ? sanitize_text_field($filter['value']) : '';
+                
+                // Only add if both field and value are provided
+                if (!empty($field) && $value !== '') {
+                    $filters[] = [
+                        'field' => $field,
+                        'value' => $value
+                    ];
+                }
             }
         }
-    }
-    $options['filters'] = $filters;
-    
-    // Handle fields to display - important for sanitization
-    if (isset($_POST['fields_to_display']) && is_array($_POST['fields_to_display'])) {
-        $fields_to_display = [];
-        foreach ($_POST['fields_to_display'] as $field) {
-            $fields_to_display[] = sanitize_text_field($field);
-        }
-        $options['fields_to_display'] = $fields_to_display;
-    } else {
-        $options['fields_to_display'] = [];
-    }
-    
-    // Handle cache settings
-    $options['enable_cache'] = isset($_POST['enable_cache']) ? '1' : '';
-    $options['cache_time'] = isset($_POST['cache_time']) ? intval($_POST['cache_time']) : 5;
-    $options['show_cache_info'] = isset($_POST['show_cache_info']) ? '1' : '';
-    
-    // Handle auto-refresh settings
-    $options['enable_auto_refresh'] = isset($_POST['enable_auto_refresh']) ? '1' : '';
-    $options['auto_refresh_interval'] = isset($_POST['auto_refresh_interval']) ? 
-                                       intval($_POST['auto_refresh_interval']) : 60;
-    
-    // Clear cache if settings were changed
-    if ($this->cache) {
-        $this->cache->clear_cache();
-    }
-    
-    // Save the options to the database
-    update_option(AIRTABLE_CONNECTOR_OPTIONS_KEY, $options);
-    
-    echo '<div class="notice notice-success is-dismissible"><p>Settings saved.</p></div>';
-}
+        $options['filters'] = $filters;
         
-        // Include the admin template
-        include_once AIRTABLE_CONNECTOR_PLUGIN_DIR . 'includes/templates/admin-settings.php';
+        // Handle fields to display - important for sanitization
+        if (isset($_POST['fields_to_display']) && is_array($_POST['fields_to_display'])) {
+            $fields_to_display = [];
+            foreach ($_POST['fields_to_display'] as $field) {
+                $fields_to_display[] = sanitize_text_field($field);
+            }
+            $options['fields_to_display'] = $fields_to_display;
+        } else {
+            $options['fields_to_display'] = [];
+        }
+        
+        // Handle cache settings - fixed to properly handle checkbox values
+        $options['enable_cache'] = isset($_POST['enable_cache']) ? '1' : '';
+        $options['cache_time'] = isset($_POST['cache_time']) ? 
+                               max(1, min(1440, intval($_POST['cache_time']))) : 5; // Validate min/max
+        $options['show_cache_info'] = isset($_POST['show_cache_info']) ? '1' : '';
+        
+        // Handle auto-refresh settings - fixed to properly handle checkbox values
+        $options['enable_auto_refresh'] = isset($_POST['enable_auto_refresh']) ? '1' : '';
+        $options['auto_refresh_interval'] = isset($_POST['auto_refresh_interval']) ? 
+                                          max(5, min(3600, intval($_POST['auto_refresh_interval']))) : 60; // Validate min/max
+        
+        // Clear cache if settings were changed
+        if ($this->cache) {
+            $this->cache->clear_cache();
+        }
+        
+        // Save the options to the database
+        update_option(AIRTABLE_CONNECTOR_OPTIONS_KEY, $options);
+        
+        echo '<div class="notice notice-success is-dismissible"><p>Settings saved.</p></div>';
     }
+    
+    // Include the admin template
+    include_once AIRTABLE_CONNECTOR_PLUGIN_DIR . 'includes/templates/admin-settings.php';
+}
 }
 
 /**
