@@ -166,14 +166,15 @@ class Airtable_Connector_Shortcode {
     private $api;
     
     /**
-     * Constructor
-     */
-    public function __construct($api) {
-        $this->api = $api;
-        
-        // Add shortcode
-        add_shortcode('airtable_simple', [$this, 'shortcode_handler']);
-    }
+ * Constructor
+ */
+public function __construct($api, $cache = null) {
+    $this->api = $api;
+    $this->cache = $cache;
+    
+    // Add shortcode
+    add_shortcode('airtable_simple', [$this, 'shortcode_handler']);
+}
     
     /**
      * Shortcode handler
