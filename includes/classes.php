@@ -529,7 +529,7 @@ $default_options = [
         // Ensure all expected keys exist in the options array
         $options = wp_parse_args($options, $default_options);
         
-      // Save options if form is submitted
+     // Save options if form is submitted
 if (isset($_POST['save_settings'])) {
     $options['api_key'] = sanitize_text_field($_POST['api_key']);
     $options['base_id'] = sanitize_text_field($_POST['base_id']);
