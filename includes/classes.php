@@ -118,7 +118,8 @@ class Airtable_Connector_API {
             'message' => 'Data retrieved successfully',
             'url' => $url,
             'data' => $data,
-            'record_count' => count($data['records'] ?? [])
+            'record_count' => count($data['records'] ?? []),
+            'timestamp' => time()  // Add timestamp for cache display
         ];
         
         // If we used filters, add filtered information
