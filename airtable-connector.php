@@ -48,7 +48,8 @@ function airtable_connector_activate() {
     if (!get_option(AIRTABLE_CONNECTOR_OPTIONS_KEY)) {
         $default_options = [
             'api_title' => 'Default API',
-            'api_id' => 'api_' . uniqid(),
+            'api_id' => '1', // Simple numeric ID
+            'api_type' => 'airtable', // For future API type distinction
             'api_key' => '',
             'base_id' => '',
             'table_name' => '',

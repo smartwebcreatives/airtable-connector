@@ -52,7 +52,7 @@ $options = $options ?? [];
                             <td>
                                 <code><?php echo esc_html($options['api_id']); ?></code>
                                 <p class="description">
-                                    <?php _e('Unique identifier for this API connection. Use in shortcodes: [airtable-api-', 'airtable-connector'); ?><?php echo esc_html(substr($options['api_id'], 4)); ?>]
+                                    <?php _e('Use in shortcodes: [airtable-', 'airtable-connector'); ?><?php echo esc_html($options['api_id']); ?>]
                                 </p>
                             </td>
                         </tr>
@@ -271,9 +271,16 @@ $options = $options ?? [];
                 <div class="airtable-card">
                     <h2><?php _e('Shortcode Usage', 'airtable-connector'); ?></h2>
                     <p>
-                        <?php _e('Use this shortcode to display Airtable data:', 'airtable-connector'); ?>
-                        <code>[airtable_simple title="My Data" columns="3"]</code>
+                        <?php _e('Use these shortcodes to display data:', 'airtable-connector'); ?>
                     </p>
+                    <ul>
+                        <li><code>[airtable_simple]</code> - <?php _e('Standard shortcode (works with any API)', 'airtable-connector'); ?></li>
+                        
+                        <?php if (!empty($options['api_id'])): ?>
+                        <li><code>[airtable-<?php echo esc_html($options['api_id']); ?>]</code> - <?php _e('ID-based shortcode', 'airtable-connector'); ?></li>
+                        <li><code>[show_refresh_button-<?php echo esc_html($options['api_id']); ?>]</code> - <?php _e('Refresh button for this API', 'airtable-connector'); ?></li>
+                        <?php endif; ?>
+                    </ul>
                     <p class="description">
                         <?php _e('Parameters:', 'airtable-connector'); ?><br>
                         <code>title</code> - <?php _e('Title to display above the data', 'airtable-connector'); ?><br>
@@ -284,20 +291,58 @@ $options = $options ?? [];
                     </p>
                 </div>
                 
-                <!-- Additional Shortcodes for this API -->
+                <!-- API Connections -->
                 <div class="airtable-card">
-                    <h2><?php _e('Multiple API Connections', 'airtable-connector'); ?></h2>
+                    <h2><?php _e('API Connections', 'airtable-connector'); ?></h2>
                     <p>
-                        <?php _e('Your API connection is uniquely identified by:', 'airtable-connector'); ?>
+                        <?php _e('Currently configured API:', 'airtable-connector'); ?>
                     </p>
-                    <ul>
-                        <li><?php _e('Name-based shortcode:', 'airtable-connector'); ?> <code>[<?php echo esc_html(sanitize_title($options['api_title'] ?? 'default-api')); ?>]</code></li>
-                        <li><?php _e('ID-based shortcode:', 'airtable-connector'); ?> <code>[airtable-api-<?php echo esc_html(substr($options['api_id'] ?? 'undefined', 4)); ?>]</code></li>
-                        <li><?php _e('Refresh button shortcode:', 'airtable-connector'); ?> <code>[show_refresh_button-<?php echo esc_html(substr($options['api_id'] ?? 'undefined', 4)); ?>]</code></li>
-                    </ul>
-                    <p>
-                        <em><?php _e('Support for multiple API connections will be available in a future update.', 'airtable-connector'); ?></em>
-                    </p>
+                    <table class="widefat">
+                        <thead>
+                            <tr>
+                                <th><?php _e('ID', 'airtable-connector'); ?></th>
+                                <th><?php _e('Name', 'airtable-connector'); ?></th>
+                                <th><?php _e('Type', 'airtable-connector'); ?></th>
+                                <th><?php _e('Shortcode', 'airtable-connector'); ?></th>
+                                <th><?php _e('Status', 'airtable-connector'); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><?php echo esc_html($options['api_id'] ?? '1'); ?></td>
+                                <td><?php echo esc_html($options['api_title'] ?? 'Default API'); ?></td>
+                                <td>Airtable</td>
+                                <td><code>[airtable-<?php echo esc_html($options['api_id'] ?? '1'); ?>]</code></td>
+                                <td><span class="dashicons dashicons-yes-alt" style="color: green;"></span> <?php _e('Active', 'airtable-connector'); ?></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="future-api-development" style="margin-top: 20px; padding: 15px; background: #f9f9f9; border-left: 4px solid #2271b1;">
+                        <h3><?php _e('Future Development Notes', 'airtable-connector'); ?></h3>
+                        <p>
+                            <?php _e('This plugin is designed to support multiple API connections in future updates. The planned features include:', 'airtable-connector'); ?>
+                        </p>
+                        <ul style="list-style-type: disc; margin-left: 20px;">
+                            <li><?php _e('Support for additional data sources (Google Sheets, REST APIs, etc.)', 'airtable-connector'); ?></li>
+                            <li><?php _e('Ability to add, edit, and delete multiple API connections', 'airtable-connector'); ?></li>
+                            <li><?php _e('Different display templates for each connection', 'airtable-connector'); ?></li>
+                            <li><?php _e('Unique refresh controls for each API', 'airtable-connector'); ?></li>
+                            <li><?php _e('Individual caching settings per connection', 'airtable-connector'); ?></li>
+                        </ul>
+                        <p>
+                            <strong><?php _e('Developer Notes:', 'airtable-connector'); ?></strong> <?php _e('The plugin architecture has been prepared for this expansion with:', 'airtable-connector'); ?>
+                        </p>
+                        <ul style="list-style-type: disc; margin-left: 20px;">
+                            <li><?php _e('Unique numeric IDs for each API connection', 'airtable-connector'); ?></li>
+                            <li><?php _e('ID-based shortcodes that will work with multiple connections', 'airtable-connector'); ?></li>
+                            <li><?php _e('An extendable settings structure that can hold multiple API configurations', 'airtable-connector'); ?></li>
+                            <li><?php _e('Type identifier to distinguish between different API sources', 'airtable-connector'); ?></li>
+                        </ul>
+                        <p>
+                            <em><?php _e('These notes can be removed when implementing the full multi-API functionality.', 'airtable-connector'); ?></em>
+                        </p>
+                    </div>
                 </div>
                 
                 <p class="submit">

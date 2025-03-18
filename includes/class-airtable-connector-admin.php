@@ -164,24 +164,42 @@ private function reset_options() {
     // Define default options
     $default_options = [
         'api_title' => 'Default API',
-        'api_id' => 'api_' . uniqid(), // Generate a new ID when resetting
+        'api_id' => '1', // Simple numeric ID
+        'api_type' => 'airtable',
         'api_key' => '',
         'base_id' => '',
         'table_name' => '',
         'fields_to_display' => [],
         'filters' => [],
-        'last_api_response' => [],
-        'enable_cache' => '1',
-        'cache_time' => '5',
-        'show_cache_info' => '1',
-        'enable_auto_refresh' => '',
-        'auto_refresh_interval' => '60'
+        'last_api_response' => []
     ];
     
     // Update with empty defaults rather than deleting completely
     update_option(AIRTABLE_CONNECTOR_OPTIONS_KEY, $default_options);
 }
+    /**
+ * Generate a new unique API ID
+ */
+private function generate_new_api_id() {
+    $options = get_option(AIRTABLE_CONNECTOR_OPTIONS_KEY, []);
     
+    // If we have a multi-API setup in the future
+    if (isset($options['apis']) && is_array($options['apis'])) {
+        // Find the highest existing ID and add 1
+        $highest_id = 0;
+        foreach ($options['apis'] as $api) {
+            if (isset($api['api_id']) && is_numeric($api['api_id']) && intval($api['api_id']) > $highest_id) {
+                $highest_id = intval($api['api_id']);
+            }
+        }
+        return (string)($highest_id + 1);
+    } 
+    // For the current single API setup
+    else {
+        return '1'; // Start with 1 for the first API
+    }
+}
+
     /**
      * Settings page
      */

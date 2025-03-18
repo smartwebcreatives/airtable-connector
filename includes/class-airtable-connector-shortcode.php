@@ -26,6 +26,7 @@ class Airtable_Connector_Shortcode {
     private $cache;
     
     /**
+ /**
  * Constructor
  */
 public function __construct($api, $cache = null) {
@@ -38,17 +39,9 @@ public function __construct($api, $cache = null) {
     // Register the standard shortcode
     add_shortcode('airtable_simple', [$this, 'shortcode_handler']);
     
-    // Register shortcode using the API title (slug version)
-    if (!empty($options['api_title'])) {
-        $api_slug = sanitize_title($options['api_title']);
-        add_shortcode($api_slug, [$this, 'shortcode_handler']);
-    }
-    
-    // Register shortcode using the API ID number
+    // Register shortcode using the simple ID
     if (!empty($options['api_id'])) {
-        // Extract the numeric part of the ID
-        $api_id_numeric = substr($options['api_id'], 4); // Remove 'api_' prefix
-        add_shortcode('airtable-api-' . $api_id_numeric, [$this, 'shortcode_handler']);
+        add_shortcode('airtable-' . $options['api_id'], [$this, 'shortcode_handler']);
     }
     
     // Register refresh button shortcode
@@ -56,8 +49,7 @@ public function __construct($api, $cache = null) {
     
     // Register ID-specific refresh button shortcode
     if (!empty($options['api_id'])) {
-        $api_id_numeric = substr($options['api_id'], 4);
-        add_shortcode('show_refresh_button-' . $api_id_numeric, [$this, 'refresh_button_shortcode']);
+        add_shortcode('show_refresh_button-' . $options['api_id'], [$this, 'refresh_button_shortcode']);
     }
 }
     

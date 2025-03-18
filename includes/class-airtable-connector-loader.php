@@ -50,8 +50,8 @@ class Airtable_Connector_Loader {
  * Load all required files
  */
 private function load_dependencies() {
-    // Load individual class files instead of classes.php
-    require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-airtable-connector-options.php';
+    // Load individual class files
+    require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-airtable-connector-api-manager.php';
     require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-airtable-connector-api.php';
     require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-airtable-connector-cache.php';
     require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-airtable-connector-shortcode.php';
