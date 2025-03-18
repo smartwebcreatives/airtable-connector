@@ -108,3 +108,6 @@ register_deactivation_hook(__FILE__, 'airtable_connector_deactivate');
 function airtable_connector_deactivate() {
     // No action needed on deactivation
 }
+
+// At the end of your airtable-connector.php file, add this line:
+add_action('plugins_loaded', 'airtable_connector_init');
