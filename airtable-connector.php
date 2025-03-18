@@ -47,6 +47,8 @@ function airtable_connector_activate() {
     // Initialize default settings if not exists
     if (!get_option(AIRTABLE_CONNECTOR_OPTIONS_KEY)) {
         $default_options = [
+            'api_title' => 'Default API',
+            'api_id' => 'api_' . uniqid(),
             'api_key' => '',
             'base_id' => '',
             'table_name' => '',

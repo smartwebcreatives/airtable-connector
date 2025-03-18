@@ -156,24 +156,31 @@ class Airtable_Connector_Admin {
         wp_die();
     }
     
-    /**
-     * Clear the options in the database
-     * This is a helper method to reset to defaults
-     */
-    private function reset_options() {
-        // Define default options
-        $default_options = [
-            'api_key' => '',
-            'base_id' => '',
-            'table_name' => '',
-            'fields_to_display' => [],
-            'filters' => [],
-            'last_api_response' => [] // Store the last API response
-        ];
-        
-        // Update with empty defaults rather than deleting completely
-        update_option(AIRTABLE_CONNECTOR_OPTIONS_KEY, $default_options);
-    }
+/**
+ * Clear the options in the database
+ * This is a helper method to reset to defaults
+ */
+private function reset_options() {
+    // Define default options
+    $default_options = [
+        'api_title' => 'Default API',
+        'api_id' => 'api_' . uniqid(), // Generate a new ID when resetting
+        'api_key' => '',
+        'base_id' => '',
+        'table_name' => '',
+        'fields_to_display' => [],
+        'filters' => [],
+        'last_api_response' => [],
+        'enable_cache' => '1',
+        'cache_time' => '5',
+        'show_cache_info' => '1',
+        'enable_auto_refresh' => '',
+        'auto_refresh_interval' => '60'
+    ];
+    
+    // Update with empty defaults rather than deleting completely
+    update_option(AIRTABLE_CONNECTOR_OPTIONS_KEY, $default_options);
+}
     
     /**
      * Settings page
@@ -215,12 +222,21 @@ class Airtable_Connector_Admin {
         $options = wp_parse_args($options, $default_options);
         
         // Check for POST submission - more explicit check for the submit button
-        if (isset($_POST['submit']) || isset($_POST['save_settings'])) {
-            // API settings
-            $options['api_key'] = isset($_POST['api_key']) ? sanitize_text_field($_POST['api_key']) : '';
-            $options['base_id'] = isset($_POST['base_id']) ? sanitize_text_field($_POST['base_id']) : '';
-            $options['table_name'] = isset($_POST['table_name']) ? sanitize_text_field($_POST['table_name']) : '';
-            
+if (isset($_POST['submit']) || isset($_POST['save_settings'])) {
+    // Add these two lines at the beginning of this section:
+    // API settings
+    $options['api_title'] = isset($_POST['api_title']) ? sanitize_text_field($_POST['api_title']) : 'Default API';
+    
+    // Generate API ID if it doesn't exist
+    if (empty($options['api_id'])) {
+        $options['api_id'] = 'api_' . uniqid();
+    }
+    
+    // Original code continues here:
+    $options['api_key'] = isset($_POST['api_key']) ? sanitize_text_field($_POST['api_key']) : '';
+    $options['base_id'] = isset($_POST['base_id']) ? sanitize_text_field($_POST['base_id']) : '';
+    $options['table_name'] = isset($_POST['table_name']) ? sanitize_text_field($_POST['table_name']) : '';
+    
             // Process filters
             $filters = [];
             if (isset($_POST['filters']) && is_array($_POST['filters'])) {
