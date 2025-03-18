@@ -460,15 +460,20 @@ public function __construct($api, $cache = null) {
             echo '<div class="notice notice-success is-dismissible"><p>All settings have been reset to defaults.</p></div>';
         }
         
-        // Define default options
-        $default_options = [
-            'api_key' => '',
-            'base_id' => '',
-            'table_name' => '',
-            'fields_to_display' => [],
-            'filters' => [],
-            'last_api_response' => []
-        ];
+      // Define default options
+$default_options = [
+    'api_key' => '',
+    'base_id' => '',
+    'table_name' => '',
+    'fields_to_display' => [],
+    'filters' => [],
+    'last_api_response' => [],
+    'enable_cache' => '1',           // Enable cache by default
+    'cache_time' => '5',             // 5 minutes cache time
+    'show_cache_info' => '1',        // Show cache info by default
+    'enable_auto_refresh' => '',     // Auto-refresh disabled by default
+    'auto_refresh_interval' => '60'  // 60 seconds refresh interval
+];
         
         // Get saved options with defaults as fallback
         $options = get_option(AIRTABLE_CONNECTOR_OPTIONS_KEY, $default_options);
