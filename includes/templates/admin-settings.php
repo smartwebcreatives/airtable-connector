@@ -176,12 +176,13 @@ $options = $options ?? [];
                         <code>[airtable_simple title="My Data" columns="3"]</code>
                     </p>
                     <p class="description">
-                        <?php _e('Parameters:', 'airtable-connector'); ?><br>
-                        <code>title</code> - <?php _e('Title to display above the data', 'airtable-connector'); ?><br>
-                        <code>columns</code> - <?php _e('Number of columns to display (default: 3)', 'airtable-connector'); ?><br>
-                        <code>filter_field</code> - <?php _e('Override the filter field setting', 'airtable-connector'); ?><br>
-                        <code>filter_value</code> - <?php _e('Override the filter value setting', 'airtable-connector'); ?>
-                    </p>
+    <?php _e('Parameters:', 'airtable-connector'); ?><br>
+    <code>title</code> - <?php _e('Title to display above the data', 'airtable-connector'); ?><br>
+    <code>columns</code> - <?php _e('Number of columns to display (default: 3)', 'airtable-connector'); ?><br>
+    <code>filter_field</code> - <?php _e('Override the filter field setting', 'airtable-connector'); ?><br>
+    <code>filter_value</code> - <?php _e('Override the filter value setting', 'airtable-connector'); ?><br>
+    <code>refresh</code> - <?php _e('Set to "yes" to bypass cache (default: "no")', 'airtable-connector'); ?>
+</p>
                 </div>
                 
                 <p class="submit">
