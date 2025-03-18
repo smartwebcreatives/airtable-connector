@@ -15,13 +15,6 @@ $options = $options ?? [];
 <div class="wrap airtable-connector-admin">
     <h1><?php _e('Airtable Connector Settings', 'airtable-connector'); ?></h1>
     
-    <div class="airtable-admin-header">
-        <a href="?page=<?php echo AIRTABLE_CONNECTOR_SLUG; ?>&reset=1" class="button" 
-           onclick="return confirm('Are you sure you want to reset all settings to defaults?');">
-            <?php _e('Reset to Defaults', 'airtable-connector'); ?>
-        </a>
-    </div>
-    
     <div class="airtable-settings-container">
         <!-- Left Column (2/3 width) -->
         <div class="airtable-column" style="flex: 2;">
@@ -245,9 +238,13 @@ $options = $options ?? [];
                     </div>
                 </div>
                 
-                <!-- Submit button - THIS IS THE CRITICAL PART THAT WAS MISSING -->
-                <p class="submit">
+                <!-- Submit button with Reset to Defaults button next to it -->
+                <p class="submit" style="display: flex; gap: 10px;">
                     <input type="submit" name="submit" id="submit" class="button button-primary" value="<?php _e('Save Settings', 'airtable-connector'); ?>">
+                    <a href="?page=<?php echo AIRTABLE_CONNECTOR_SLUG; ?>&reset=1" class="button" 
+                       onclick="return confirm('Are you sure you want to reset all settings to defaults?');">
+                        <?php _e('Reset to Defaults', 'airtable-connector'); ?>
+                    </a>
                 </p>
             </form>
             
@@ -265,68 +262,8 @@ $options = $options ?? [];
                     </p>
                 </div>
             </form>
-        </div>
-        
-        <!-- Right Column (1/3 width) -->
-        <div class="airtable-column" style="flex: 1;">
-            <!-- API Response -->
-            <div class="airtable-card" id="api-response-container">
-                <h2><?php _e('API Response', 'airtable-connector'); ?></h2>
-                
-                <div id="api-response-content">
-                    <?php 
-                    // Display saved API response if available
-                    if (!empty($options['last_api_response']) && !empty($options['last_api_response']['data']['records'])) {
-                        $response = $options['last_api_response'];
-                        $record_count = count($response['data']['records'] ?? []);
-                        
-                        echo '<div class="airtable-success">';
-                        echo '<p><strong>' . __('Success!', 'airtable-connector') . '</strong> ' . __('Connection to Airtable is working properly.', 'airtable-connector') . '</p>';
-                        echo '<p><strong>' . __('Records Retrieved:', 'airtable-connector') . '</strong> ' . $record_count . '</p>';
-                        
-                        // Show filter information if applied
-                        if (!empty($response['filter_applied'])) {
-                            if (!empty($response['filters']) && count($response['filters']) > 0) {
-                                if (count($response['filters']) === 1) {
-                                    echo '<p><strong>' . __('Filter Applied:', 'airtable-connector') . '</strong> ' . 
-                                        esc_html($response['filters'][0]['field']) . ' = "' . 
-                                        esc_html($response['filters'][0]['value']) . '"</p>';
-                                } else {
-                                    echo '<p><strong>' . __('Filters Applied:', 'airtable-connector') . '</strong></p>';
-                                    echo '<ul class="filter-list">';
-                                    
-                                    foreach ($response['filters'] as $filter) {
-                                        echo '<li>' . esc_html($filter['field']) . ' = "' . esc_html($filter['value']) . '"</li>';
-                                    }
-                                    
-                                    echo '</ul>';
-                                }
-                                echo '<p><strong>' . __('Filtered Records Found:', 'airtable-connector') . '</strong> ' . 
-                                    esc_html($response['filtered_record_count']) . '</p>';
-                            }
-                        }
-                        
-                        if (!empty($response['url'])) {
-                            echo '<p><strong>' . __('API URL:', 'airtable-connector') . '</strong> ' . esc_html($response['url']) . '</p>';
-                        }
-                        
-                        echo '</div>';
-                        
-                        // Add the JSON data
-                        echo '<h3>' . __('API Response', 'airtable-connector') . '</h3>';
-                        echo '<div class="api-response-json">';
-                        echo '<pre>' . json_encode($response['data'], JSON_PRETTY_PRINT) . '</pre>';
-                        echo '</div>';
-                    } else {
-                        echo '<p class="no-data-message">';
-                        echo __('Test the connection to see API response data.', 'airtable-connector');
-                        echo '</p>';
-                    }
-                    ?>
-                </div>
-            </div>
             
-            <!-- Shortcode Usage -->
+            <!-- Shortcode Usage moved below Cache Management as requested -->
             <div class="airtable-card">
                 <h2><?php _e('Shortcode Usage', 'airtable-connector'); ?></h2>
                 <p>
@@ -370,59 +307,4 @@ $options = $options ?? [];
                                     <li>d3 = desktop (3 columns)</li>
                                     <li>t2 = tablet (2 columns)</li>
                                     <li>ml2 = mobile landscape (2 columns)</li>
-                                    <li>m1 = mobile portrait (1 column)</li>
-                                </ul>
-                            </td>
-                            <td>"d3,t2,ml2,m1"</td>
-                        </tr>
-                        <tr>
-                            <td><code>filter_field</code></td>
-                            <td><?php _e('Override the filter field setting', 'airtable-connector'); ?></td>
-                            <td>empty</td>
-                        </tr>
-                        <tr>
-                            <td><code>filter_value</code></td>
-                            <td><?php _e('Override the filter value setting', 'airtable-connector'); ?></td>
-                            <td>empty</td>
-                        </tr>
-                        <tr>
-                            <td><code>refresh</code></td>
-                            <td><?php _e('Set to "yes" to bypass cache (one-time refresh)', 'airtable-connector'); ?></td>
-                            <td>"no"</td>
-                        </tr>
-                        <tr>
-                            <td><code>show_refresh_button</code></td>
-                            <td><?php _e('Set to "yes" to show a manual refresh button', 'airtable-connector'); ?></td>
-                            <td>"no"</td>
-                        </tr>
-                        <tr>
-                            <td><code>show_countdown</code></td>
-                            <td><?php _e('Set to "yes" to show countdown timer until next refresh', 'airtable-connector'); ?></td>
-                            <td>"no"</td>
-                        </tr>
-                        <tr>
-                            <td><code>show_last_updated</code></td>
-                            <td><?php _e('Set to "yes" or "no" to override global setting for displaying last updated timestamp', 'airtable-connector'); ?></td>
-                            <td>uses global setting</td>
-                        </tr>
-                        <tr>
-                            <td><code>auto_refresh</code></td>
-                            <td><?php _e('Set to "yes" or "no" to override global setting for auto-refresh', 'airtable-connector'); ?></td>
-                            <td>uses global setting</td>
-                        </tr>
-                        <tr>
-                            <td><code>auto_refresh_interval</code></td>
-                            <td><?php _e('Time in seconds between auto-refreshes (5-3600)', 'airtable-connector'); ?></td>
-                            <td>uses global setting</td>
-                        </tr>
-                        <tr>
-                            <td><code>id</code></td>
-                            <td><?php _e('Custom ID for the shortcode instance (useful for multiple shortcodes on same page)', 'airtable-connector'); ?></td>
-                            <td>auto-generated</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
+                                    <li>m1 = mobile portrait (1 col
