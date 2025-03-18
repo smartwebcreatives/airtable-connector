@@ -80,11 +80,12 @@ function airtable_connector_init() {
     if (airtable_connector_load_files()) {
         // Create instances  
         $api = new Airtable_Connector_API();  
-        $shortcode = new Airtable_Connector_Shortcode($api);  
+        $cache = new Airtable_Connector_Cache();  
+        $shortcode = new Airtable_Connector_Shortcode($api, $cache);  
           
         // Load admin only when needed  
         if (is_admin()) {  
-            $admin = new Airtable_Connector_Admin($api);  
+            $admin = new Airtable_Connector_Admin($api, $cache);  
         }
     } else {
         // Add an admin notice if files are missing
