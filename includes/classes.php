@@ -300,23 +300,24 @@ class Airtable_Connector_Admin {
     private $api;
     
     /**
-     * Constructor
-     */
-    public function __construct($api) {
-        $this->api = $api;
-        
-        // Add admin menu
-        add_action('admin_menu', [$this, 'add_admin_menu']);
-        
-        // Register settings
-        add_action('admin_init', [$this, 'register_settings']);
-        
-        // Enqueue admin scripts
-        add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
-        
-        // Add AJAX handler for testing API connection
-        add_action('wp_ajax_airtable_connector_test_connection', [$this, 'test_connection_ajax']);
-    }
+ * Constructor
+ */
+public function __construct($api, $cache = null) {
+    $this->api = $api;
+    $this->cache = $cache;
+    
+    // Add admin menu
+    add_action('admin_menu', [$this, 'add_admin_menu']);
+    
+    // Register settings
+    add_action('admin_init', [$this, 'register_settings']);
+    
+    // Enqueue admin scripts
+    add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
+    
+    // Add AJAX handler for testing API connection
+    add_action('wp_ajax_airtable_connector_test_connection', [$this, 'test_connection_ajax']);
+}
     
     /**
      * Enqueue admin scripts
