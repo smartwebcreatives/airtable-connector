@@ -118,3 +118,38 @@ function airtable_connector_deactivate() {
 
 // At the end of your airtable-connector.php file, add this line:
 add_action('plugins_loaded', 'airtable_connector_init');
+
+// Add inline CSS for card styling
+function airtable_connector_add_inline_styles() {
+    echo '<style>
+    /* Card styling with maximum specificity */
+    html body div.airtable-connector-container div.airtable-item {
+        border: 2px solid #e0e0e0 !important;
+        border-radius: 8px !important;
+        padding: 20px !important;
+        background-color: #ffffff !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+        margin-bottom: 15px !important;
+    }
+
+    /* Force the hover effect */
+    html body div.airtable-connector-container div.airtable-item:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15) !important;
+        transition: all 0.3s ease !important;
+    }
+
+    /* Apply field styling */
+    html body div.airtable-connector-container div.airtable-field {
+        padding-bottom: 10px !important;
+        border-bottom: 1px solid #f0f0f0 !important;
+        margin-bottom: 10px !important;
+    }
+
+    /* Ensure grid spacing */
+    html body div.airtable-connector-container div.airtable-grid {
+        gap: 24px !important;
+    }
+    </style>';
+}
+add_action('wp_head', 'airtable_connector_add_inline_styles');
