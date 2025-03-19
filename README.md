@@ -5,6 +5,7 @@ A lightweight WordPress plugin that allows you to display Airtable data on your 
 ## Features
 
 - **Simple Integration**: Connect to your Airtable bases with minimal configuration
+- **Numeric Shortcodes**: Easy-to-remember shortcodes using simple numeric IDs (e.g., `[airtable-001]`)
 - **Customizable Display**: Choose which fields to display and how they appear
 - **Responsive Grid Layout**: Data automatically adjusts to different screen sizes
 - **Powerful Filtering**: Show only the records that match your criteria
@@ -23,6 +24,7 @@ A lightweight WordPress plugin that allows you to display Airtable data on your 
 ### API Settings
 
 - **API Name**: A friendly name for this API connection
+- **Numeric ID**: The unique ID used in shortcodes (automatically generated)
 - **API Key**: Your Airtable API key/Bearer Token 
 - **Base ID**: The Airtable Base ID (e.g., "appURtLsEk5ZdoL7f")
 - **Table Name**: The table name (e.g., "Leads") or table ID
@@ -49,26 +51,28 @@ A lightweight WordPress plugin that allows you to display Airtable data on your 
 ### Basic Shortcode
 
 ```
-[airtable_simple]
+[airtable-001]
 ```
+
+Where "001" is your unique numeric ID shown in the admin settings.
 
 ### Customized Shortcode
 
 ```
-[airtable_simple title="Team Members" columns="4" filter_field="Department" filter_value="Marketing" refresh="no" show_refresh_button="yes" show_countdown="yes"]
+[airtable-001 title="Team Members" columns="4" filter_field="Department" filter_value="Marketing" refresh="no" show_refresh_button="yes" show_countdown="yes"]
 ```
 
 ### Advanced Grid Layout
 
 ```
-[airtable_simple grid="d3,t2,ml2,m1"]
+[airtable-001 grid="d3,t2,ml2,m1"]
 ```
 This sets 3 columns on desktop, 2 on tablet, 2 on mobile landscape, and 1 on mobile portrait.
 
-### Standalone Refresh Button
+### Refresh Button
 
 ```
-[show_refresh_button label="Update Data" class="button button-primary"]
+[refresh-001 label="Update Data" class="button button-primary"]
 ```
 
 ## Shortcode Parameters
@@ -87,14 +91,6 @@ This sets 3 columns on desktop, 2 on tablet, 2 on mobile landscape, and 1 on mob
 | `auto_refresh` | Set to "yes"/"no" to override global setting | - |
 | `auto_refresh_interval` | Custom refresh interval in seconds | - |
 | `id` | Custom ID for the shortcode instance | Auto-generated |
-
-## Multiple API Connections
-
-Each API connection has unique shortcode identifiers:
-
-- **Name-based shortcode**: `[api-name-slug]`
-- **ID-based shortcode**: `[airtable-api-XXXX]`
-- **Refresh button shortcode**: `[show_refresh_button-XXXX]`
 
 ## Styling
 
@@ -134,15 +130,17 @@ The plugin includes basic responsive styles. You can customize the appearance by
    - Check for special characters in field names
    - Inspect browser console for JavaScript errors
 
+## Upcoming Features
+
+- Multiple API connections with independent settings
+- Support for additional data sources beyond Airtable
+- Advanced display templates and formatting options
+- Direct frontend editing capabilities
+- Custom field type handling (attachments, linked records, etc.)
+
 ## Developer Notes
 
-### Actions & Filters
-
-Coming in a future update!
-
-### Custom Templates
-
-Coming in a future update!
+The plugin uses a simple numeric ID system for shortcodes (e.g., `[airtable-001]`). This makes it easy for users to reference their connections and simplifies future multi-API support.
 
 ## License
 
@@ -150,9 +148,14 @@ This plugin is licensed under the GPL v2 or later.
 
 ## Credits
 
-Developed by Learning
+Developed by Jerry
 
 ## Changelog
 
 ### 1.0.0
-- Initial release
+- Initial release with basic Airtable integration
+
+### 1.1.0
+- Added numeric ID system for simplified shortcodes
+- Improved responsive grid layout with custom column settings
+- Enhanced admin interface with clearer shortcode documentation
