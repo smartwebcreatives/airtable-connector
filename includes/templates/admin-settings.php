@@ -422,9 +422,63 @@ $options = $options ?? [];
                 </div>
                 
                 <p class="shortcode-hint">Click on a shortcode to copy it to your clipboard</p>
+                
+                <!-- Divider line -->
+                <div class="shortcode-divider"></div>
+                
+                <!-- Additional parameters -->
+                <div class="shortcode-parameters">
+                    <h3><?php _e('Available Parameters', 'airtable-connector'); ?></h3>
+                    <p class="parameter-intro"><?php _e('Customize shortcodes with these parameters:', 'airtable-connector'); ?></p>
+                    
+                    <div class="parameter-grid">
+                        <div class="parameter-item">
+                            <div class="parameter-name">title="Your Title"</div>
+                            <div class="parameter-desc"><?php _e('Set a custom title above the data display', 'airtable-connector'); ?></div>
+                        </div>
+                        
+                        <div class="parameter-item">
+                            <div class="parameter-name">columns="4"</div>
+                            <div class="parameter-desc"><?php _e('Number of columns in grid layout (default: 3)', 'airtable-connector'); ?></div>
+                        </div>
+                        
+                        <div class="parameter-item">
+                            <div class="parameter-name">grid="d3,t2,ml2,m1"</div>
+                            <div class="parameter-desc"><?php _e('Responsive columns: desktop, tablet, mobile-landscape, mobile', 'airtable-connector'); ?></div>
+                        </div>
+                        
+                        <div class="parameter-item">
+                            <div class="parameter-name">filter_field="Department"</div>
+                            <div class="parameter-desc"><?php _e('Field name to filter by', 'airtable-connector'); ?></div>
+                        </div>
+                        
+                        <div class="parameter-item">
+                            <div class="parameter-name">filter_value="Marketing"</div>
+                            <div class="parameter-desc"><?php _e('Value to match for filtering', 'airtable-connector'); ?></div>
+                        </div>
+                        
+                        <div class="parameter-item">
+                            <div class="parameter-name">refresh="yes"</div>
+                            <div class="parameter-desc"><?php _e('Bypass cache for this instance (default: "no")', 'airtable-connector'); ?></div>
+                        </div>
+                        
+                        <div class="parameter-item">
+                            <div class="parameter-name">show_refresh_button="yes"</div>
+                            <div class="parameter-desc"><?php _e('Display a refresh button with the data', 'airtable-connector'); ?></div>
+                        </div>
+                        
+                        <div class="parameter-item">
+                            <div class="parameter-name">show_countdown="yes"</div>
+                            <div class="parameter-desc"><?php _e('Show auto-refresh countdown timer', 'airtable-connector'); ?></div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameter-example">
+                        <h4><?php _e('Example with Multiple Parameters:', 'airtable-connector'); ?></h4>
+                        <pre>[airtable-<?php echo esc_html($options['numeric_id'] ?? '001'); ?> title="Team Members" columns="4" filter_field="Department" filter_value="Marketing" show_refresh_button="yes"]</pre>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
     
     <!-- Clear Cache Button Outside the Main Settings Form -->
     <form method="post" action="" class="clear-cache-form">
