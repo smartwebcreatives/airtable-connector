@@ -59,19 +59,7 @@ $options = $options ?? [];
                             </td>
                         </tr>
                         <?php endif; ?>
-                        <?php if (!empty($options['api_id'])) : ?>
-                        <tr>
-                            <th scope="row">
-                                <?php _e('API ID', 'airtable-connector'); ?>
-                            </th>
-                            <td>
-                                <code><?php echo esc_html($options['api_id']); ?></code>
-                                <p class="description">
-                                    <?php _e('Internal identifier (for development use only)', 'airtable-connector'); ?>
-                                </p>
-                            </td>
-                        </tr>
-                        <?php endif; ?>
+                       
                         <tr>
                             <th scope="row">
                                 <label for="api_key"><?php _e('API Key', 'airtable-connector'); ?></label>
