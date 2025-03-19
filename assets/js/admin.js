@@ -67,7 +67,7 @@ function showCopiedMessage(parentElement) {
         setTimeout(function() {
             message.remove();
         }, 300);
-    }, 2000);
+    }, 1500);  // Changed from 2000 to 1500 for quicker feedback
 }
 
 jQuery(document).ready(function($) {

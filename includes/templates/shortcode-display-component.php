@@ -29,7 +29,7 @@ function airtable_connector_render_shortcode_display($numeric_id) {
         <div class="shortcode-display-container">
             <div class="shortcode-row">
                 <span class="shortcode-name">Display Airtable Data:</span>
-                <div class="code-snippet">
+                <div class="inline-code-with-copy">
                     <code id="display-shortcode">[airtable-<?php echo esc_html($numeric_id); ?>]</code>
                     <span class="copy-icon dashicons dashicons-clipboard" data-clipboard-target="#display-shortcode" title="Copy to clipboard"></span>
                 </div>
@@ -37,7 +37,7 @@ function airtable_connector_render_shortcode_display($numeric_id) {
             
             <div class="shortcode-row">
                 <span class="shortcode-name">Refresh Button:</span>
-                <div class="code-snippet">
+                <div class="inline-code-with-copy">
                     <code id="refresh-shortcode">[refresh-<?php echo esc_html($numeric_id); ?>]</code>
                     <span class="copy-icon dashicons dashicons-clipboard" data-clipboard-target="#refresh-shortcode" title="Copy to clipboard"></span>
                 </div>
