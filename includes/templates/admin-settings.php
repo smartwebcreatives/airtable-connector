@@ -270,39 +270,6 @@ $options = $options ?? [];
                     </table>
                 </div>
                 
-                <!-- Shortcode Usage -->
-                <div class="airtable-card" id="shortcode-usage-container">
-    <h2><?php _e('Shortcode Usage', 'airtable-connector'); ?></h2>
-    <div class="shortcode-display-container">
-        <div class="shortcode-row">
-            <span class="shortcode-name">Display Airtable Data:</span>
-            <div class="inline-code-with-copy">
-                <code id="usage-display-shortcode">[airtable-<?php echo esc_html($options['numeric_id'] ?? '001'); ?>]</code>
-            </div>
-        </div>
-        
-        <div class="shortcode-row">
-            <span class="shortcode-name">Refresh Button:</span>
-            <div class="inline-code-with-copy">
-                <code id="usage-refresh-shortcode">[refresh-<?php echo esc_html($options['numeric_id'] ?? '001'); ?>]</code>
-            </div>
-        </div>
-    </div>
-    
-    <p class="shortcode-hint">Click on a shortcode to copy it to your clipboard</p>
-</div>
-        
-        <div class="shortcode-row">
-            <span class="shortcode-name">Refresh Button:</span>
-            <div class="inline-code-with-copy">
-                <code id="usage-refresh-shortcode">[refresh-<?php echo esc_html($options['numeric_id'] ?? '001'); ?>]</code>
-            </div>
-        </div>
-    </div>
-    
-    <p class="shortcode-hint">Click on a shortcode to copy it to your clipboard</p>
-</div>
-                
                 <!-- API Connections -->
                 <div class="airtable-card">
                     <h2><?php _e('API Connections', 'airtable-connector'); ?></h2>
@@ -362,67 +329,100 @@ $options = $options ?? [];
             </form>
         </div>
         
-     <!-- Data Column -->
-<div class="airtable-column">
-    <?php 
-    // Include the shortcode display component
-    require_once AIRTABLE_CONNECTOR_PLUGIN_DIR . 'includes/templates/shortcode-display-component.php';
-    airtable_connector_render_shortcode_display($options['numeric_id'] ?? '001');
-    ?>
-    
-    <div class="airtable-card" id="api-response-container">
-        <h2><?php _e('API Response', 'airtable-connector'); ?></h2>
-        
-        <div id="api-response-content">
+        <!-- Data Column -->
+        <div class="airtable-column">
             <?php 
-            // Display saved API response if available
-            if (!empty($options['last_api_response']) && !empty($options['last_api_response']['data']['records'])) {
-                $response = $options['last_api_response'];
-                $record_count = count($response['data']['records'] ?? []);
-                
-                echo '<div class="airtable-success">';
-                echo '<p><strong>' . __('Success!', 'airtable-connector') . '</strong> ' . __('Connection to Airtable is working properly.', 'airtable-connector') . '</p>';
-                echo '<p><strong>' . __('Records Retrieved:', 'airtable-connector') . '</strong> ' . $record_count . '</p>';
-                
-                // Show filter information if applied
-                if (!empty($response['filter_applied'])) {
-                    if (!empty($response['filters']) && count($response['filters']) > 0) {
-                        if (count($response['filters']) === 1) {
-                            echo '<p><strong>' . __('Filter Applied:', 'airtable-connector') . '</strong> ' . 
-                                esc_html($response['filters'][0]['field']) . ' = "' . 
-                                esc_html($response['filters'][0]['value']) . '"</p>';
-                        } else {
-                            echo '<p><strong>' . __('Filters Applied:', 'airtable-connector') . '</strong></p>';
-                            echo '<ul class="filter-list">';
-                            
-                            foreach ($response['filters'] as $filter) {
-                                echo '<li>' . esc_html($filter['field']) . ' = "' . esc_html($filter['value']) . '"</li>';
-                            }
-                            
-                            echo '</ul>';
-                        }
-                        echo '<p><strong>' . __('Filtered Records Found:', 'airtable-connector') . '</strong> ' . 
-                            esc_html($response['filtered_record_count']) . '</p>';
-                    }
-                }
-                
-                if (!empty($response['url'])) {
-                    echo '<p><strong>' . __('API URL:', 'airtable-connector') . '</strong> ' . esc_html($response['url']) . '</p>';
-                }
-                
-                echo '</div>';
-                
-                // Add the JSON data
-                echo '<h3>' . __('DATA', 'airtable-connector') . ' <span class="refresh-data-link"><span class="dashicons dashicons-update"></span> ' . __('fetch data', 'airtable-connector') . '</span></h3>';
-                echo '<div class="api-response-json">';
-                echo '<pre>' . json_encode($response['data'], JSON_PRETTY_PRINT) . '</pre>';
-                echo '</div>';
+            // Include the shortcode display component
+            $shortcode_display_path = AIRTABLE_CONNECTOR_PLUGIN_DIR . 'includes/templates/shortcode-display-component.php';
+            if (file_exists($shortcode_display_path)) {
+                require_once $shortcode_display_path;
+                airtable_connector_render_shortcode_display($options['numeric_id'] ?? '001');
             } else {
-                echo '<p class="no-data-message">';
-                echo __('Test the connection to see API response data.', 'airtable-connector');
-                echo '</p>';
+                // Fallback display if component file is missing
+                echo '<div class="airtable-card">';
+                echo '<h2>Airtable-' . esc_html($options['numeric_id'] ?? '001') . ' Shortcodes</h2>';
+                echo '<p>Use shortcode: <code>[airtable-' . esc_html($options['numeric_id'] ?? '001') . ']</code></p>';
+                echo '<p>Refresh button: <code>[refresh-' . esc_html($options['numeric_id'] ?? '001') . ']</code></p>';
+                echo '</div>';
             }
             ?>
+            
+            <div class="airtable-card" id="api-response-container">
+                <h2><?php _e('API Response', 'airtable-connector'); ?></h2>
+                
+                <div id="api-response-content">
+                    <?php 
+                    // Display saved API response if available
+                    if (!empty($options['last_api_response']) && !empty($options['last_api_response']['data']['records'])) {
+                        $response = $options['last_api_response'];
+                        $record_count = count($response['data']['records'] ?? []);
+                        
+                        echo '<div class="airtable-success">';
+                        echo '<p><strong>' . __('Success!', 'airtable-connector') . '</strong> ' . __('Connection to Airtable is working properly.', 'airtable-connector') . '</p>';
+                        echo '<p><strong>' . __('Records Retrieved:', 'airtable-connector') . '</strong> ' . $record_count . '</p>';
+                        
+                        // Show filter information if applied
+                        if (!empty($response['filter_applied'])) {
+                            if (!empty($response['filters']) && count($response['filters']) > 0) {
+                                if (count($response['filters']) === 1) {
+                                    echo '<p><strong>' . __('Filter Applied:', 'airtable-connector') . '</strong> ' . 
+                                        esc_html($response['filters'][0]['field']) . ' = "' . 
+                                        esc_html($response['filters'][0]['value']) . '"</p>';
+                                } else {
+                                    echo '<p><strong>' . __('Filters Applied:', 'airtable-connector') . '</strong></p>';
+                                    echo '<ul class="filter-list">';
+                                    
+                                    foreach ($response['filters'] as $filter) {
+                                        echo '<li>' . esc_html($filter['field']) . ' = "' . esc_html($filter['value']) . '"</li>';
+                                    }
+                                    
+                                    echo '</ul>';
+                                }
+                                echo '<p><strong>' . __('Filtered Records Found:', 'airtable-connector') . '</strong> ' . 
+                                    esc_html($response['filtered_record_count']) . '</p>';
+                            }
+                        }
+                        
+                        if (!empty($response['url'])) {
+                            echo '<p><strong>' . __('API URL:', 'airtable-connector') . '</strong> ' . esc_html($response['url']) . '</p>';
+                        }
+                        
+                        echo '</div>';
+                        
+                        // Add the JSON data
+                        echo '<h3>' . __('DATA', 'airtable-connector') . ' <span class="refresh-data-link"><span class="dashicons dashicons-update"></span> ' . __('fetch data', 'airtable-connector') . '</span></h3>';
+                        echo '<div class="api-response-json">';
+                        echo '<pre>' . json_encode($response['data'], JSON_PRETTY_PRINT) . '</pre>';
+                        echo '</div>';
+                    } else {
+                        echo '<p class="no-data-message">';
+                        echo __('Test the connection to see API response data.', 'airtable-connector');
+                        echo '</p>';
+                    }
+                    ?>
+                </div>
+            </div>
+            
+            <div class="airtable-card" id="shortcode-usage-container">
+                <h2><?php _e('Shortcode Usage', 'airtable-connector'); ?></h2>
+                <div class="shortcode-display-container">
+                    <div class="shortcode-row">
+                        <span class="shortcode-name">Display Airtable Data:</span>
+                        <div class="inline-code-with-copy">
+                            <code id="usage-display-shortcode">[airtable-<?php echo esc_html($options['numeric_id'] ?? '001'); ?>]</code>
+                        </div>
+                    </div>
+                    
+                    <div class="shortcode-row">
+                        <span class="shortcode-name">Refresh Button:</span>
+                        <div class="inline-code-with-copy">
+                            <code id="usage-refresh-shortcode">[refresh-<?php echo esc_html($options['numeric_id'] ?? '001'); ?>]</code>
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="shortcode-hint">Click on a shortcode to copy it to your clipboard</p>
+            </div>
         </div>
     </div>
     

@@ -2,6 +2,43 @@
  * Admin CSS for Airtable Connector
  */
 
+/* Layout and structure */
+.airtable-connector-admin {
+    margin: 20px 0;
+}
+
+.airtable-admin-header {
+    margin-bottom: 20px;
+}
+
+.airtable-settings-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.airtable-column {
+    flex: 1;
+    min-width: 320px;
+}
+
+/* Cards & content containers */
+.airtable-card {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ccd0d4;
+    border-radius: 3px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+
+.airtable-card h2 {
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 1.3em;
+}
+
 /* Shortcode display component */
 #shortcode-display {
     margin-bottom: 20px;
@@ -101,43 +138,6 @@
 .refresh-data-link.refreshing .dashicons {
     /* Remove the animation */
     color: #999;
-}
-
-/* Layout and structure */
-.airtable-connector-admin {
-    margin: 20px 0;
-}
-
-.airtable-admin-header {
-    margin-bottom: 20px;
-}
-
-.airtable-settings-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-}
-
-.airtable-column {
-    flex: 1;
-    min-width: 320px;
-}
-
-/* Cards & content containers */
-.airtable-card {
-    background: #fff;
-    padding: 20px;
-    border: 1px solid #ccd0d4;
-    border-radius: 3px;
-    margin-bottom: 20px;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-}
-
-.airtable-card h2 {
-    margin-top: 0;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #f0f0f0;
-    font-size: 1.3em;
 }
 
 /* Form elements */
@@ -243,100 +243,103 @@
 
 .api-response-json {
     background: #f8f8f8;
-    padding: 15px;
-    border: 1px solid #ddd;
-    max-height: 500px;
-    overflow: auto;
-    font-family: monospace;
-    font-size: 12px;
-    border-radius: 3px;
-}
-
-.api-response-json pre {
-    margin: 0;
-    white-space: pre-wrap;
-}
-
-.filter-list {
-    margin: 5px 0 10px 20px;
-    color: #0a7c18;
-}
-
-#connection-status {
-    margin-left: 10px;
-    display: inline-block;
-}
-
-/* Status messages */
-.status-success,
-.status-error {
-    display: inline-block;
-    padding: 3px 8px;
-    border-radius: 3px;
-    margin-left: 10px;
-    font-size: 13px;
-    animation: fadeIn 0.3s ease-in;
-}
-
-.status-success {
-    background-color: #f0fff4;
-    color: #0a7c18;
-    border: 1px solid #c3e6cb;
-}
-
-.status-error {
-    background-color: #fff0f0;
-    color: #c71c1c;
-    border: 1px solid #f5c6cb;
-}
-
-.fetch-feedback {
-    font-size: 12px;
-    margin-left: 8px;
-    animation: fadeIn 0.3s ease-in;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-.no-data-message {
-    color: #666;
-    font-style: italic;
-}
-
-/* Button spacing */
-.submit {
-    margin-top: 0;
-    padding-top: 0;
-}
-
-/* Responsive adjustments */
-@media screen and (max-width: 782px) {
-    .airtable-form-table th {
-        width: auto;
-        display: block;
-        padding-bottom: 0;
+    padding
+    .api-response-json {
+        background: #f8f8f8;
+        padding: 15px;
+        border: 1px solid #ddd;
+        max-height: 500px;
+        overflow: auto;
+        font-family: monospace;
+        font-size: 12px;
+        border-radius: 3px;
     }
     
-    .airtable-form-table td {
-        display: block;
+    .api-response-json pre {
+        margin: 0;
+        white-space: pre-wrap;
     }
     
-    .filter-row {
-        flex-direction: column;
-        align-items: stretch;
+    .filter-list {
+        margin: 5px 0 10px 20px;
+        color: #0a7c18;
     }
     
-    .filter-row input.filter-field,
-    .filter-row input.filter-value {
-        margin-right: 0;
-        margin-bottom: 10px;
+    #connection-status {
+        margin-left: 10px;
+        display: inline-block;
     }
-}
-
-@keyframes rotation {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(359deg); }
-}
+    
+    /* Status messages */
+    .status-success,
+    .status-error {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 3px;
+        margin-left: 10px;
+        font-size: 13px;
+        animation: fadeIn 0.3s ease-in;
+    }
+    
+    .status-success {
+        background-color: #f0fff4;
+        color: #0a7c18;
+        border: 1px solid #c3e6cb;
+    }
+    
+    .status-error {
+        background-color: #fff0f0;
+        color: #c71c1c;
+        border: 1px solid #f5c6cb;
+    }
+    
+    .fetch-feedback {
+        font-size: 12px;
+        margin-left: 8px;
+        animation: fadeIn 0.3s ease-in;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    .no-data-message {
+        color: #666;
+        font-style: italic;
+    }
+    
+    /* Button spacing */
+    .submit {
+        margin-top: 0;
+        padding-top: 0;
+    }
+    
+    /* Responsive adjustments */
+    @media screen and (max-width: 782px) {
+        .airtable-form-table th {
+            width: auto;
+            display: block;
+            padding-bottom: 0;
+        }
+        
+        .airtable-form-table td {
+            display: block;
+        }
+        
+        .filter-row {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        
+        .filter-row input.filter-field,
+        .filter-row input.filter-value {
+            margin-right: 0;
+            margin-bottom: 10px;
+        }
+    }
+    
+    @keyframes rotation {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(359deg); }
+    }
