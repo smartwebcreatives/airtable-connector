@@ -1,153 +1,182 @@
 /**
  * Frontend CSS for Airtable Connector
+ * Clean, minimalistic design with subtle styling
  */
 
 /* Container */
 .airtable-connector-container {
-    margin: 20px 0;
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-}
-
-/* Header - RED FOR TESTING */
-.airtable-title {
+    margin: 2rem 0;
+    font-size: inherit;
+    line-height: 1.5;
+    color: #333;
+  }
+  
+  /* Header */
+  .airtable-title {
     margin-top: 0;
-    margin-bottom: 20px;
-    font-size: 1.5em;
-    color: #ff0000; /* RED title for testing */
-    border-bottom: 2px solid #eaeaea;
-    padding-bottom: 10px;
-}
-
-/* Filter information */
-.airtable-filter-info {
-    margin-bottom: 15px;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  /* Filter information */
+  .airtable-filter-info {
+    margin-bottom: 1rem;
     font-style: italic;
     color: #666;
-}
-
-.airtable-filter-list {
-    margin: 5px 0 10px 20px;
-    padding-left: 20px;
-}
-
-.airtable-record-count {
-    font-weight: bold;
-}
-
-/* Controls section */
-.airtable-controls {
+    font-size: 0.9rem;
+  }
+  
+  .airtable-filter-list {
+    margin: 0.5rem 0 0.75rem 1.25rem;
+    padding-left: 1rem;
+  }
+  
+  .airtable-record-count {
+    font-weight: 600;
+  }
+  
+  /* Controls section */
+  .airtable-controls {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 24px;
-    padding: 12px 15px;
-    background-color: #f0f0f0;
-    border: 1px solid #e0e0e0;
-    border-radius: 6px;
-}
-
-/* Last updated */
-.airtable-last-updated {
-    color: #666;
-    font-size: 0.9em;
-}
-
-.airtable-last-updated span {
-    font-weight: bold;
-}
-
-/* Update now button */
-.airtable-update-now {
-    background-color: #0073aa;
-    color: white;
-    border: none;
+    margin-bottom: 1.5rem;
+    padding: 0.75rem 1rem;
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
     border-radius: 4px;
-    padding: 8px 16px;
+  }
+  
+  /* Last updated */
+  .airtable-last-updated {
+    color: #6c757d;
+    font-size: 0.9rem;
+  }
+  
+  .airtable-last-updated span {
+    font-weight: 600;
+    color: #495057;
+  }
+  
+  /* Update now button */
+  .airtable-update-now {
+    background-color: #f1f3f5;
+    color: #495057;
+    border: 1px solid #dee2e6;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.airtable-update-now:hover {
-    background-color: #005a87;
-}
-
-.airtable-update-now:disabled {
-    background-color: #ccc;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+  }
+  
+  .airtable-update-now:hover {
+    background-color: #e9ecef;
+    border-color: #ced4da;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .airtable-update-now:disabled {
+    background-color: #e9ecef;
+    color: #adb5bd;
     cursor: not-allowed;
-}
-
-/* Countdown timer */
-.airtable-countdown {
-    color: #666;
-    font-size: 0.9em;
-}
-
-.airtable-timer {
-    font-weight: bold;
-    color: #333;
-}
-
-/* Grid spacing and layout */
-.airtable-grid {
-    gap: 24px;
-}
-
-/* Card styling for Airtable items */
-.airtable-item {
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 20px;
-    background-color: #ffffff;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    height: 100%;
-}
-
-.airtable-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-/* Field styling within cards */
-.airtable-field {
-    margin-bottom: 12px;
-    padding-bottom: 10px;
+    transform: none;
+    box-shadow: none;
+  }
+  
+  /* Countdown timer */
+  .airtable-countdown {
+    color: #6c757d;
+    font-size: 0.9rem;
+  }
+  
+  .airtable-timer {
+    font-weight: 600;
+    color: #495057;
+  }
+  
+  /* Grid layout */
+  .airtable-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+  
+  /* Grid items */
+  .airtable-item {
+    border: 1px solid #e9ecef;
+    padding: 1.25rem;
+    background-color: #fff;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    transition: all 0.2s ease;
+  }
+  
+  .airtable-item:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
+  }
+  
+  /* Field styling */
+  .airtable-field {
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.75rem;
     border-bottom: 1px solid #f5f5f5;
-}
-
-.airtable-field:last-child {
+  }
+  
+  .airtable-field:last-child {
     margin-bottom: 0;
     padding-bottom: 0;
     border-bottom: none;
-}
-
-.airtable-field-label {
+  }
+  
+  .airtable-field-label {
     font-weight: 600;
-    color: #555;
-    margin-right: 5px;
-    font-size: 0.9em;
-}
-
-.airtable-field-value {
+    color: #495057;
+    margin-right: 0.25rem;
+  }
+  
+  .airtable-field-value {
     color: #333;
-}
-
-/* Responsive adjustments */
-@media screen and (max-width: 768px) {
+  }
+  
+  /* Refresh button shortcode styling */
+  a.button {
+    display: inline-block;
+    background-color: #f1f3f5;
+    color: #495057;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+  }
+  
+  a.button:hover {
+    background-color: #e9ecef;
+    border-color: #ced4da;
+    text-decoration: none;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Responsive adjustments */
+  @media screen and (max-width: 768px) {
     .airtable-controls {
-        flex-direction: column;
-        align-items: flex-start;
+      flex-direction: column;
+      align-items: flex-start;
     }
     
     .airtable-controls > div,
     .airtable-controls > button {
-        margin-bottom: 10px;
+      margin-bottom: 0.75rem;
     }
     
     .airtable-controls > *:last-child {
-        margin-bottom: 0;
+      margin-bottom: 0;
     }
-}
+  }
