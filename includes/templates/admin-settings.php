@@ -291,6 +291,17 @@ $options = $options ?? [];
     
     <p class="shortcode-hint">Click on a shortcode to copy it to your clipboard</p>
 </div>
+        
+        <div class="shortcode-row">
+            <span class="shortcode-name">Refresh Button:</span>
+            <div class="inline-code-with-copy">
+                <code id="usage-refresh-shortcode">[refresh-<?php echo esc_html($options['numeric_id'] ?? '001'); ?>]</code>
+            </div>
+        </div>
+    </div>
+    
+    <p class="shortcode-hint">Click on a shortcode to copy it to your clipboard</p>
+</div>
                 
                 <!-- API Connections -->
                 <div class="airtable-card">
@@ -351,8 +362,7 @@ $options = $options ?? [];
             </form>
         </div>
         
-        <!-- Data Column -->
-      <!-- Data Column -->
+     <!-- Data Column -->
 <div class="airtable-column">
     <?php 
     // Include the shortcode display component
@@ -362,60 +372,57 @@ $options = $options ?? [];
     
     <div class="airtable-card" id="api-response-container">
         <h2><?php _e('API Response', 'airtable-connector'); ?></h2>
+        
+        <div id="api-response-content">
+            <?php 
+            // Display saved API response if available
+            if (!empty($options['last_api_response']) && !empty($options['last_api_response']['data']['records'])) {
+                $response = $options['last_api_response'];
+                $record_count = count($response['data']['records'] ?? []);
                 
-                <div id="api-response-content">
-                    <?php 
-                    // Display saved API response if available
-                    if (!empty($options['last_api_response']) && !empty($options['last_api_response']['data']['records'])) {
-                        $response = $options['last_api_response'];
-                        $record_count = count($response['data']['records'] ?? []);
-                        
-                        echo '<div class="airtable-success">';
-                        echo '<p><strong>' . __('Success!', 'airtable-connector') . '</strong> ' . __('Connection to Airtable is working properly.', 'airtable-connector') . '</p>';
-                        echo '<p><strong>' . __('Records Retrieved:', 'airtable-connector') . '</strong> ' . $record_count . '</p>';
-                        
-                        // Show filter information if applied
-                        if (!empty($response['filter_applied'])) {
-                            if (!empty($response['filters']) && count($response['filters']) > 0) {
-                                if (count($response['filters']) === 1) {
-                                    echo '<p><strong>' . __('Filter Applied:', 'airtable-connector') . '</strong> ' . 
-                                        esc_html($response['filters'][0]['field']) . ' = "' . 
-                                        esc_html($response['filters'][0]['value']) . '"</p>';
-                                } else {
-                                    echo '<p><strong>' . __('Filters Applied:', 'airtable-connector') . '</strong></p>';
-                                    echo '<ul class="filter-list">';
-                                    
-                                    foreach ($response['filters'] as $filter) {
-                                        echo '<li>' . esc_html($filter['field']) . ' = "' . esc_html($filter['value']) . '"</li>';
-                                    }
-                                    
-                                    echo '</ul>';
-                                }
-                                echo '<p><strong>' . __('Filtered Records Found:', 'airtable-connector') . '</strong> ' . 
-                                    esc_html($response['filtered_record_count']) . '</p>';
+                echo '<div class="airtable-success">';
+                echo '<p><strong>' . __('Success!', 'airtable-connector') . '</strong> ' . __('Connection to Airtable is working properly.', 'airtable-connector') . '</p>';
+                echo '<p><strong>' . __('Records Retrieved:', 'airtable-connector') . '</strong> ' . $record_count . '</p>';
+                
+                // Show filter information if applied
+                if (!empty($response['filter_applied'])) {
+                    if (!empty($response['filters']) && count($response['filters']) > 0) {
+                        if (count($response['filters']) === 1) {
+                            echo '<p><strong>' . __('Filter Applied:', 'airtable-connector') . '</strong> ' . 
+                                esc_html($response['filters'][0]['field']) . ' = "' . 
+                                esc_html($response['filters'][0]['value']) . '"</p>';
+                        } else {
+                            echo '<p><strong>' . __('Filters Applied:', 'airtable-connector') . '</strong></p>';
+                            echo '<ul class="filter-list">';
+                            
+                            foreach ($response['filters'] as $filter) {
+                                echo '<li>' . esc_html($filter['field']) . ' = "' . esc_html($filter['value']) . '"</li>';
                             }
+                            
+                            echo '</ul>';
                         }
-                        
-                        if (!empty($response['url'])) {
-                            echo '<p><strong>' . __('API URL:', 'airtable-connector') . '</strong> ' . esc_html($response['url']) . '</p>';
-                        }
-                        
-                        echo '</div>';
-                        
-                        // Add the JSON data
-                        // Add the JSON data
-echo '<h3>' . __('DATA', 'airtable-connector') . ' <span class="refresh-data-link"><span class="dashicons dashicons-update"></span> ' . __('fetch data', 'airtable-connector') . '</span></h3>';
-                        echo '<div class="api-response-json">';
-                        echo '<pre>' . json_encode($response['data'], JSON_PRETTY_PRINT) . '</pre>';
-                        echo '</div>';
-                    } else {
-                        echo '<p class="no-data-message">';
-                        echo __('Test the connection to see API response data.', 'airtable-connector');
-                        echo '</p>';
+                        echo '<p><strong>' . __('Filtered Records Found:', 'airtable-connector') . '</strong> ' . 
+                            esc_html($response['filtered_record_count']) . '</p>';
                     }
-                    ?>
-                </div>
-            </div>
+                }
+                
+                if (!empty($response['url'])) {
+                    echo '<p><strong>' . __('API URL:', 'airtable-connector') . '</strong> ' . esc_html($response['url']) . '</p>';
+                }
+                
+                echo '</div>';
+                
+                // Add the JSON data
+                echo '<h3>' . __('DATA', 'airtable-connector') . ' <span class="refresh-data-link"><span class="dashicons dashicons-update"></span> ' . __('fetch data', 'airtable-connector') . '</span></h3>';
+                echo '<div class="api-response-json">';
+                echo '<pre>' . json_encode($response['data'], JSON_PRETTY_PRINT) . '</pre>';
+                echo '</div>';
+            } else {
+                echo '<p class="no-data-message">';
+                echo __('Test the connection to see API response data.', 'airtable-connector');
+                echo '</p>';
+            }
+            ?>
         </div>
     </div>
     

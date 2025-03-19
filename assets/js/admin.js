@@ -86,21 +86,71 @@ jQuery(document).ready(function($) {
     
     // Handle test connection button
     $('#test-connection').on('click', function(e) {
-        // Original code will run first, then our modifications will apply
+        // Clear any existing status messages first
+        $('#connection-feedback').remove();
+        
+        // Original AJAX call will run here, then our modifications will apply
         
         // Set a timeout to modify the response after it's loaded
         setTimeout(function() {
             // Fix the second heading from "API Response" to "DATA" with fetch data link
             var apiResponseHeadings = $('#api-response-content h3');
+            
+            // Check if the operation was successful
+            var isSuccess = $('#api-response-content .airtable-success').length > 0;
+            var isError = $('#api-response-content .airtable-error').length > 0;
+            
+            // Create feedback message for connection area
+            var statusHtml = '';
+            if (isSuccess) {
+                statusHtml = '<span id="connection-feedback" class="status-success">Connection successful!</span>';
+            } else if (isError) {
+                var errorMsg = $('#api-response-content .airtable-error').text().trim();
+                errorMsg = errorMsg.length > 50 ? errorMsg.substring(0, 50) + '...' : errorMsg;
+                statusHtml = '<span id="connection-feedback" class="status-error">Error: ' + errorMsg + '</span>';
+            }
+            
+            // Add feedback next to the verify connection button
+            if (statusHtml && !$('#connection-feedback').length) {
+                $('#test-connection').after(statusHtml);
+                
+                // Auto-remove after some time
+                setTimeout(function() {
+                    $('#connection-feedback').fadeOut(500, function() {
+                        $(this).remove();
+                    });
+                }, 5000);
+            }
+            
             if (apiResponseHeadings.length > 0) {
                 apiResponseHeadings.each(function(index) {
                     if ($(this).text() === 'API Response') {
-                        $(this).html('DATA <span class="refresh-data-link"><span class="dashicons dashicons-update"></span> fetch data</span>');
+                        // Create the refresh link with potential status indicator
+                        var refreshHtml = '<span class="refresh-data-link"><span class="dashicons dashicons-update"></span> fetch data</span>';
+                        
+                        // Add feedback to fetch data area if needed
+                        if (isSuccess && !$('.fetch-feedback').length) {
+                            refreshHtml += '<span class="fetch-feedback status-success">Data refreshed!</span>';
+                        } else if (isError && !$('.fetch-feedback').length) {
+                            refreshHtml += '<span class="fetch-feedback status-error">Failed to fetch data</span>';
+                        }
+                        
+                        $(this).html('DATA ' + refreshHtml);
+                        
+                        // Auto-remove fetch feedback after some time
+                        setTimeout(function() {
+                            $('.fetch-feedback').fadeOut(500, function() {
+                                $(this).remove();
+                            });
+                        }, 5000);
                         
                         // Reattach the event handler to the new refresh link
                         $(this).find('.refresh-data-link').on('click', function(e) {
                             e.preventDefault();
                             var $link = $(this);
+                            
+                            // Remove any existing feedback
+                            $('.fetch-feedback').remove();
                             
                             // Don't do anything if already refreshing
                             if ($link.hasClass('refreshing')) {

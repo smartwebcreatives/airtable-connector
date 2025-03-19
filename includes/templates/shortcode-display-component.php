@@ -46,5 +46,4 @@ function airtable_connector_render_shortcode_display($numeric_id) {
     </div>
     <?php
 }
-
 ?>
