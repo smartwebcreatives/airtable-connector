@@ -2,7 +2,7 @@
  * Admin CSS for Airtable Connector
  */
 
- /* Shortcode display component */
+/* Shortcode display component */
 #shortcode-display {
     margin-bottom: 20px;
 }
@@ -48,7 +48,6 @@
     background: rgba(0, 0, 0, .1);
 }
 
-
 .shortcode-hint {
     color: #666;
     font-size: 12px;
@@ -73,6 +72,34 @@
 
 .shortcode-copied.visible {
     opacity: 1;
+}
+
+/* Refresh data link */
+.refresh-data-link {
+    display: inline-flex;
+    align-items: center;
+    font-size: 13px;
+    color: #2271b1;
+    cursor: pointer;
+    margin-left: 8px;
+    vertical-align: middle;
+    font-weight: normal;
+}
+
+.refresh-data-link:hover {
+    color: #135e96;
+    text-decoration: underline;
+}
+
+.refresh-data-link .dashicons {
+    font-size: 16px;
+    height: 16px;
+    width: 16px;
+    margin-right: 3px;
+}
+
+.refresh-data-link.refreshing .dashicons {
+    animation: rotation 2s infinite linear;
 }
 
 /* Layout and structure */
@@ -273,4 +300,9 @@
         margin-right: 0;
         margin-bottom: 10px;
     }
+}
+
+@keyframes rotation {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(359deg); }
 }

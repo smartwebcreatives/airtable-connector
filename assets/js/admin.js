@@ -2,25 +2,13 @@
  * Admin JavaScript for Airtable Connector
  */
 
-/// Shortcode clipboard functionality
+// Shortcode clipboard functionality
 function initializeShortcodeClipboard() {
-    // Handle click on shortcode code elements
-    document.querySelectorAll('#shortcode-display code').forEach(function(element) {
+    // Handle click on shortcode code elements (both in shortcode display and usage containers)
+    document.querySelectorAll('#shortcode-display code, #shortcode-usage-container code').forEach(function(element) {
         element.addEventListener('click', function() {
             copyToClipboard(this.textContent);
             showCopiedMessage(this.parentNode);
-        });
-    });
-    
-    // Handle click on copy icons
-    document.querySelectorAll('.copy-icon').forEach(function(icon) {
-        icon.addEventListener('click', function() {
-            const targetId = this.getAttribute('data-clipboard-target');
-            const shortcodeElement = document.querySelector(targetId);
-            if (shortcodeElement) {
-                copyToClipboard(shortcodeElement.textContent);
-                showCopiedMessage(this.parentNode);
-            }
         });
     });
 }
@@ -73,6 +61,28 @@ function showCopiedMessage(parentElement) {
 jQuery(document).ready(function($) {
 // Initialize shortcode clipboard functionality
 initializeShortcodeClipboard();
+
+// Handle refresh data link
+$('.refresh-data-link').on('click', function(e) {
+    e.preventDefault();
+    var $link = $(this);
+    
+    // Don't do anything if already refreshing
+    if ($link.hasClass('refreshing')) {
+        return;
+    }
+    
+    // Show refreshing state
+    $link.addClass('refreshing');
+    
+    // Trigger the test connection button
+    $('#test-connection').trigger('click');
+    
+    // Reset state after a timeout (in case the Ajax call fails)
+    setTimeout(function() {
+        $link.removeClass('refreshing');
+    }, 10000);
+});
 
     // Handle adding new filter
     $('#add-filter').on('click', function(e) {

@@ -271,27 +271,26 @@ $options = $options ?? [];
                 </div>
                 
                 <!-- Shortcode Usage -->
-                <div class="airtable-card">
-                    <h2><?php _e('Shortcode Usage', 'airtable-connector'); ?></h2>
-                    <p>
-                        <?php _e('Use these shortcodes to display data:', 'airtable-connector'); ?>
-                    </p>
-                    <ul>
-                        <li><code>[airtable-<?php echo esc_html($options['numeric_id'] ?? '001'); ?>]</code> - <?php _e('Numeric shortcode (recommended)', 'airtable-connector'); ?></li>
-                        <li><code>[refresh-<?php echo esc_html($options['numeric_id'] ?? '001'); ?>]</code> - <?php _e('Refresh button for this connection', 'airtable-connector'); ?></li>
-                    </ul>
-                    <p class="description">
-                        <?php _e('Parameters:', 'airtable-connector'); ?><br>
-                        <code>title</code> - <?php _e('Title to display above the data', 'airtable-connector'); ?><br>
-                        <code>columns</code> - <?php _e('Number of columns to display (default: 3)', 'airtable-connector'); ?><br>
-                        <code>grid</code> - <?php _e('Responsive grid settings (e.g., "d3,t2,ml2,m1")', 'airtable-connector'); ?><br>
-                        <code>filter_field</code> - <?php _e('Override the filter field setting', 'airtable-connector'); ?><br>
-                        <code>filter_value</code> - <?php _e('Override the filter value setting', 'airtable-connector'); ?><br>
-                        <code>refresh</code> - <?php _e('Set to "yes" to bypass cache (default: "no")', 'airtable-connector'); ?><br>
-                        <code>show_refresh_button</code> - <?php _e('Set to "yes" to show a refresh button', 'airtable-connector'); ?><br>
-                        <code>show_countdown</code> - <?php _e('Set to "yes" to show a countdown timer', 'airtable-connector'); ?>
-                    </p>
-                </div>
+                <div class="airtable-card" id="shortcode-usage-container">
+    <h2><?php _e('Shortcode Usage', 'airtable-connector'); ?></h2>
+    <div class="shortcode-display-container">
+        <div class="shortcode-row">
+            <span class="shortcode-name">Display Airtable Data:</span>
+            <div class="inline-code-with-copy">
+                <code id="usage-display-shortcode">[airtable-<?php echo esc_html($options['numeric_id'] ?? '001'); ?>]</code>
+            </div>
+        </div>
+        
+        <div class="shortcode-row">
+            <span class="shortcode-name">Refresh Button:</span>
+            <div class="inline-code-with-copy">
+                <code id="usage-refresh-shortcode">[refresh-<?php echo esc_html($options['numeric_id'] ?? '001'); ?>]</code>
+            </div>
+        </div>
+    </div>
+    
+    <p class="shortcode-hint">Click on a shortcode to copy it to your clipboard</p>
+</div>
                 
                 <!-- API Connections -->
                 <div class="airtable-card">
@@ -404,7 +403,8 @@ $options = $options ?? [];
                         echo '</div>';
                         
                         // Add the JSON data
-                        echo '<h3>' . __('API Response', 'airtable-connector') . '</h3>';
+                        // Add the JSON data
+echo '<h3>' . __('DATA', 'airtable-connector') . ' <span class="refresh-data-link"><span class="dashicons dashicons-update"></span> ' . __('fetch data', 'airtable-connector') . '</span></h3>';
                         echo '<div class="api-response-json">';
                         echo '<pre>' . json_encode($response['data'], JSON_PRETTY_PRINT) . '</pre>';
                         echo '</div>';
