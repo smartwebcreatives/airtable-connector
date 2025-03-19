@@ -355,7 +355,7 @@
         to { transform: rotate(359deg); }
     }
 
-    /* Shortcode Parameters Section */
+   /* Shortcode Parameters Section */
 .shortcode-divider {
     height: 1px;
     background: #e2e4e7;
@@ -394,10 +394,20 @@
 }
 
 .parameter-name {
+    margin-bottom: 5px;
+}
+
+.parameter-name .inline-code-with-copy code {
     font-family: Consolas, Monaco, monospace;
     font-size: 13px;
     color: #0073aa;
-    margin-bottom: 5px;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+}
+
+.parameter-name .inline-code-with-copy code:hover {
+    background: rgba(0, 0, 0, 0.05);
 }
 
 .parameter-desc {
@@ -420,14 +430,19 @@
     color: #333;
 }
 
-.parameter-example pre {
-    background: rgba(0, 0, 0, .07);
-    padding: 10px;
-    border-radius: 3px;
+.full-width {
+    width: 100%;
+}
+
+.full-width code {
+    display: block;
     overflow-x: auto;
-    margin: 0;
+    padding: 10px !important;
+    background: rgba(0, 0, 0, .07) !important;
+    border-radius: 3px;
     font-family: Consolas, Monaco, monospace;
     font-size: 13px;
+    line-height: 1.5;
 }
 
 @media screen and (max-width: 782px) {

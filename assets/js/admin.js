@@ -4,8 +4,10 @@
 
 // Shortcode clipboard functionality
 function initializeShortcodeClipboard() {
-    // Handle click on shortcode code elements
-    document.querySelectorAll('#shortcode-display code, #shortcode-usage-container code').forEach(function(element) {
+    // Target all code elements in copy containers
+    const codeElements = document.querySelectorAll('#shortcode-display code, #shortcode-usage-container code, .parameter-grid code, .parameter-example code');
+    
+    codeElements.forEach(function(element) {
         element.addEventListener('click', function() {
             copyToClipboard(this.textContent);
             showCopiedMessage(this.parentNode);
