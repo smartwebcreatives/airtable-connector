@@ -5,13 +5,19 @@
 /* Container */
 .airtable-connector-container {
     margin: 20px 0;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
 }
 
 /* Header */
 .airtable-title {
     margin-top: 0;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     font-size: 1.5em;
+    color: #333;
+    border-bottom: 2px solid #eaeaea;
+    padding-bottom: 10px;
 }
 
 /* Filter information */
@@ -36,11 +42,11 @@
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-    padding: 10px;
-    background-color: #f8f8f8;
-    border: 1px solid #e5e5e5;
-    border-radius: 3px;
+    margin-bottom: 24px;
+    padding: 12px 15px;
+    background-color: #f0f0f0;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
 }
 
 /* Last updated */
@@ -56,16 +62,16 @@
 /* Update now button */
 .airtable-update-now {
     background-color: #0073aa;
-    color: #fff;
+    color: white;
     border: none;
-    padding: 8px 15px;
-    border-radius: 3px;
+    border-radius: 4px;
+    padding: 8px 16px;
     cursor: pointer;
     transition: background-color 0.2s;
 }
 
 .airtable-update-now:hover {
-    background-color: #006291;
+    background-color: #005a87;
 }
 
 .airtable-update-now:disabled {
@@ -84,51 +90,12 @@
     color: #333;
 }
 
-/* Grid items */
-.airtable-item {
-    border: 1px solid #e5e5e5;
-    padding: 15px;
-    background-color: #f9f9f9;
-    border-radius: 3px;
-    transition: transform 0.2s, box-shadow 0.2s;
+/* Grid spacing and layout */
+.airtable-grid {
+    gap: 24px;
 }
 
-.airtable-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-/* Field styling */
-.airtable-field {
-    margin-bottom: 10px;
-}
-
-.airtable-field:last-child {
-    margin-bottom: 0;
-}
-
-.airtable-field-label {
-    font-weight: bold;
-    color: #333;
-}
-
-/* Responsive adjustments */
-@media screen and (max-width: 768px) {
-    .airtable-controls {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .airtable-controls > div,
-    .airtable-controls > button {
-        margin-bottom: 10px;
-    }
-    
-    .airtable-controls > *:last-child {
-        margin-bottom: 0;
-    }
-
-    /* Card styling for Airtable items */
+/* Card styling for Airtable items */
 .airtable-item {
     border: 1px solid #e0e0e0;
     border-radius: 8px;
@@ -168,47 +135,19 @@
     color: #333;
 }
 
-/* Grid spacing and layout */
-.airtable-grid {
-    gap: 24px;
-}
-
-/* Container styling */
-.airtable-connector-container {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-}
-
-/* Title styling */
-.airtable-title {
-    color: #333;
-    border-bottom: 2px solid #eaeaea;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-}
-
-/* Controls section styling */
-.airtable-controls {
-    background-color: #f0f0f0;
-    border: 1px solid #e0e0e0;
-    border-radius: 6px;
-    padding: 12px 15px;
-    margin-bottom: 24px;
-}
-
-/* Update button styling */
-.airtable-update-now {
-    background-color: #0073aa;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 8px 16px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.airtable-update-now:hover {
-    background-color: #005a87;
-}
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    .airtable-controls {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .airtable-controls > div,
+    .airtable-controls > button {
+        margin-bottom: 10px;
+    }
+    
+    .airtable-controls > *:last-child {
+        margin-bottom: 0;
+    }
 }
