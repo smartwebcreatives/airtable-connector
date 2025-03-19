@@ -27,32 +27,26 @@ function airtable_connector_render_shortcode_display($numeric_id) {
         <h2>Airtable-<?php echo esc_html($numeric_id); ?> Shortcodes</h2>
         
         <div class="shortcode-display-container">
-            <div class="shortcode-item">
-                <div class="shortcode-label">Display Airtable Data:</div>
-                <div class="shortcode-copy-container">
+            <div class="shortcode-row">
+                <span class="shortcode-name">Display Airtable Data:</span>
+                <div class="code-snippet">
                     <code id="display-shortcode">[airtable-<?php echo esc_html($numeric_id); ?>]</code>
-                    <button type="button" class="shortcode-copy-button button" data-clipboard-target="#display-shortcode">
-                        <span class="dashicons dashicons-clipboard"></span> Copy
-                    </button>
+                    <span class="copy-icon dashicons dashicons-clipboard" data-clipboard-target="#display-shortcode" title="Copy to clipboard"></span>
                 </div>
             </div>
             
-            <div class="shortcode-item">
-                <div class="shortcode-label">Refresh Button:</div>
-                <div class="shortcode-copy-container">
+            <div class="shortcode-row">
+                <span class="shortcode-name">Refresh Button:</span>
+                <div class="code-snippet">
                     <code id="refresh-shortcode">[refresh-<?php echo esc_html($numeric_id); ?>]</code>
-                    <button type="button" class="shortcode-copy-button button" data-clipboard-target="#refresh-shortcode">
-                        <span class="dashicons dashicons-clipboard"></span> Copy
-                    </button>
+                    <span class="copy-icon dashicons dashicons-clipboard" data-clipboard-target="#refresh-shortcode" title="Copy to clipboard"></span>
                 </div>
             </div>
         </div>
         
-        <div class="shortcode-description">
-            <p>Click on any shortcode to copy it to your clipboard.</p>
-            <p>Use these shortcodes in any page or post to display your Airtable data.</p>
-        </div>
+        <p class="shortcode-hint">Click on a shortcode to copy it to your clipboard</p>
     </div>
     <?php
+}
 }
 ?>

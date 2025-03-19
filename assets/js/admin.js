@@ -2,24 +2,24 @@
  * Admin JavaScript for Airtable Connector
  */
 
-// Shortcode clipboard functionality
+/// Shortcode clipboard functionality
 function initializeShortcodeClipboard() {
-    // Handle click on shortcode elements
+    // Handle click on shortcode code elements
     document.querySelectorAll('#shortcode-display code').forEach(function(element) {
         element.addEventListener('click', function() {
             copyToClipboard(this.textContent);
-            showCopiedMessage(this);
+            showCopiedMessage(this.parentNode);
         });
     });
     
-    // Handle click on copy buttons
-    document.querySelectorAll('.shortcode-copy-button').forEach(function(button) {
-        button.addEventListener('click', function() {
+    // Handle click on copy icons
+    document.querySelectorAll('.copy-icon').forEach(function(icon) {
+        icon.addEventListener('click', function() {
             const targetId = this.getAttribute('data-clipboard-target');
             const shortcodeElement = document.querySelector(targetId);
             if (shortcodeElement) {
                 copyToClipboard(shortcodeElement.textContent);
-                showCopiedMessage(shortcodeElement);
+                showCopiedMessage(this.parentNode);
             }
         });
     });
@@ -27,16 +27,24 @@ function initializeShortcodeClipboard() {
 
 // Copy text to clipboard
 function copyToClipboard(text) {
-    const textarea = document.createElement('textarea');
-    textarea.value = text;
-    document.body.appendChild(textarea);
-    textarea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textarea);
+    if (navigator.clipboard && window.isSecureContext) {
+        // Modern approach for secure contexts
+        navigator.clipboard.writeText(text);
+    } else {
+        // Fallback for older browsers
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+    }
 }
 
 // Show copied message
-function showCopiedMessage(element) {
+function showCopiedMessage(parentElement) {
     // Remove any existing copied messages
     document.querySelectorAll('.shortcode-copied').forEach(function(msg) {
         msg.remove();
@@ -46,7 +54,7 @@ function showCopiedMessage(element) {
     const message = document.createElement('span');
     message.className = 'shortcode-copied';
     message.textContent = 'Copied!';
-    element.parentNode.appendChild(message);
+    parentElement.appendChild(message);
     
     // Make it visible (animate)
     setTimeout(function() {
