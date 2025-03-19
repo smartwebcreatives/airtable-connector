@@ -241,34 +241,45 @@
     margin-bottom: 15px;
 }
 
+/* Scrollable DATA section */
 .api-response-json {
     background: #f8f8f8;
-    padding
-    .api-response-json {
-        background: #f8f8f8;
-        padding: 15px;
-        border: 1px solid #ddd;
-        max-height: 500px;
-        overflow: auto;
-        font-family: monospace;
-        font-size: 12px;
-        border-radius: 3px;
-    }
-    
-    .api-response-json pre {
-        margin: 0;
-        white-space: pre-wrap;
-    }
-    
-    .filter-list {
-        margin: 5px 0 10px 20px;
-        color: #0a7c18;
-    }
-    
-    #connection-status {
-        margin-left: 10px;
-        display: inline-block;
-    }
+    padding: 15px;
+    border: 1px solid #ddd;
+    height: 300px; /* Fixed height for scrollability */
+    max-height: 50vh; /* Also limit by viewport height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: auto; /* Enable horizontal scrolling if needed */
+    font-family: monospace;
+    font-size: 12px;
+    border-radius: 3px;
+    position: relative;
+}
+
+.api-response-json pre {
+    margin: 0;
+    white-space: pre-wrap;
+}
+
+/* Optional: Add scroll indicator */
+.api-response-json:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: linear-gradient(to top, rgba(248, 248, 248, 0.9), rgba(248, 248, 248, 0));
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.api-response-json.scrollable:after {
+    opacity: 1;
+}
     
     /* Status messages */
     .status-success,

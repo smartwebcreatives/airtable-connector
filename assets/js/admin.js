@@ -219,4 +219,42 @@ jQuery(document).ready(function($) {
     
     // Add spinning animation
     $('<style>.dashicons-update { display: inline-block; } @keyframes rotation { from { transform: rotate(0deg); } to { transform: rotate(359deg); } }</style>').appendTo('head');
+// Add scroll indicator for DATA section
+function initializeScrollIndicator() {
+    const dataContainer = document.querySelector('.api-response-json');
+    if (!dataContainer) return;
+    
+    // Check if container is scrollable
+    const checkScrollable = () => {
+        if (dataContainer.scrollHeight > dataContainer.clientHeight) {
+            dataContainer.classList.add('scrollable');
+        } else {
+            dataContainer.classList.remove('scrollable');
+        }
+    };
+    
+    // Initial check
+    checkScrollable();
+    
+    // Update on window resize
+    window.addEventListener('resize', checkScrollable);
+    
+    // Update when scrolled to bottom
+    dataContainer.addEventListener('scroll', () => {
+        if (dataContainer.scrollHeight - dataContainer.scrollTop <= dataContainer.clientHeight + 10) {
+            dataContainer.classList.remove('scrollable');
+        } else {
+            dataContainer.classList.add('scrollable');
+        }
+    });
+}
+
+// Call this function to initialize the scroll indicator
+initializeScrollIndicator();
+
+// Also reinitialize after test connection
+$('#test-connection').on('click', function() {
+    setTimeout(initializeScrollIndicator, 1000);
+});
+
 });
