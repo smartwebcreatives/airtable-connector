@@ -26,32 +26,31 @@ class Airtable_Connector_Shortcode {
     private $cache;
     
     /**
- /**
- * Constructor
- */
-public function __construct($api, $cache = null) {
-    $this->api = $api;
-    $this->cache = $cache;
-    
-    // Get options
-    $options = get_option(AIRTABLE_CONNECTOR_OPTIONS_KEY, []);
-    
-    // Register the standard shortcode
-    add_shortcode('airtable_simple', [$this, 'shortcode_handler']);
-    
-    // Register numeric shortcode if available
-    if (!empty($options['numeric_id'])) {
-        add_shortcode('airtable-' . $options['numeric_id'], [$this, 'shortcode_handler']);
+     * Constructor
+     */
+    public function __construct($api, $cache = null) {
+        $this->api = $api;
+        $this->cache = $cache;
+        
+        // Get options
+        $options = get_option(AIRTABLE_CONNECTOR_OPTIONS_KEY, []);
+        
+        // Register the standard shortcode
+        add_shortcode('airtable_simple', [$this, 'shortcode_handler']);
+        
+        // Register numeric shortcode if available
+        if (!empty($options['numeric_id'])) {
+            add_shortcode('airtable-' . $options['numeric_id'], [$this, 'shortcode_handler']);
+        }
+        
+        // Register refresh button shortcode
+        add_shortcode('show_refresh_button', [$this, 'refresh_button_shortcode']);
+        
+        // Register numeric refresh button shortcode
+        if (!empty($options['numeric_id'])) {
+            add_shortcode('refresh-' . $options['numeric_id'], [$this, 'refresh_button_shortcode']);
+        }
     }
-    
-    // Register refresh button shortcode
-    add_shortcode('show_refresh_button', [$this, 'refresh_button_shortcode']);
-    
-    // Register numeric refresh button shortcode
-    if (!empty($options['numeric_id'])) {
-        add_shortcode('refresh-' . $options['numeric_id'], [$this, 'refresh_button_shortcode']);
-    }
-}
     
     /**
      * Enqueue frontend scripts
@@ -301,16 +300,16 @@ public function __construct($api, $cache = null) {
             $show_cache_info = false;
         }
         
-      // Check if page was refreshed with our parameter or button
-$force_refresh = isset($_GET['refresh_airtable']) || ($atts['refresh'] === 'yes');
+        // Check if page was refreshed with our parameter or button
+        $force_refresh = isset($_GET['refresh_airtable']) || ($atts['refresh'] === 'yes');
 
-// Get data with or without cache
-$result = null;
+        // Get data with or without cache
+        $result = null;
 
-if (!$force_refresh && !empty($options['enable_cache']) && $this->cache) {
-    // Try to get from cache first
-    $result = $this->cache->get_cached_data($options);
-}
+        if (!$force_refresh && !empty($options['enable_cache']) && $this->cache) {
+            // Try to get from cache first
+            $result = $this->cache->get_cached_data($options);
+        }
         
         // If not in cache or cache disabled, get from API
         if ($result === false || $result === null) {
@@ -470,28 +469,28 @@ if (!$force_refresh && !empty($options['enable_cache']) && $this->cache) {
     }
 
     /**
- * Refresh button shortcode handler
- */
-public function refresh_button_shortcode($atts) {
-    // Parse attributes
-    $atts = shortcode_atts(
-        array(
-            'label' => 'Refresh Data',
-            'class' => 'button',
-        ),
-        $atts,
-        'show_refresh_button'
-    );
-    
-    // Create a simple button that refreshes the page with a no-cache parameter
-    $current_url = remove_query_arg('refresh_airtable');
-    $refresh_url = add_query_arg('refresh_airtable', '1', $current_url);
-    
-    // Output the button
-    $output = '<a href="' . esc_url($refresh_url) . '" class="' . esc_attr($atts['class']) . '">';
-    $output .= esc_html($atts['label']);
-    $output .= '</a>';
-    
-    return $output;
-}
+     * Refresh button shortcode handler
+     */
+    public function refresh_button_shortcode($atts) {
+        // Parse attributes
+        $atts = shortcode_atts(
+            array(
+                'label' => 'Refresh Data',
+                'class' => 'button',
+            ),
+            $atts,
+            'show_refresh_button'
+        );
+        
+        // Create a simple button that refreshes the page with a no-cache parameter
+        $current_url = remove_query_arg('refresh_airtable');
+        $refresh_url = add_query_arg('refresh_airtable', '1', $current_url);
+        
+        // Output the button
+        $output = '<a href="' . esc_url($refresh_url) . '" class="' . esc_attr($atts['class']) . '">';
+        $output .= esc_html($atts['label']);
+        $output .= '</a>';
+        
+        return $output;
+    }
 }

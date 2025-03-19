@@ -161,17 +161,26 @@ class Airtable_Connector_Admin {
  * This is a helper method to reset to defaults
  */
 private function reset_options() {
+    // Get current numeric ID or use 001 if none exists
+    $current_options = get_option(AIRTABLE_CONNECTOR_OPTIONS_KEY, []);
+    $numeric_id = isset($current_options['numeric_id']) ? $current_options['numeric_id'] : '001';
+    
     // Define default options
     $default_options = [
         'api_title' => 'Default API',
-        'api_id' => '1', // Simple numeric ID
-        'api_type' => 'airtable',
+        'api_id' => 'api_' . uniqid(), // Generate a new ID when resetting
+        'numeric_id' => $numeric_id, // Keep the same numeric ID when resetting
         'api_key' => '',
         'base_id' => '',
         'table_name' => '',
         'fields_to_display' => [],
         'filters' => [],
-        'last_api_response' => []
+        'last_api_response' => [],
+        'enable_cache' => '1',
+        'cache_time' => '5',
+        'show_cache_info' => '1',
+        'enable_auto_refresh' => '',
+        'auto_refresh_interval' => '60'
     ];
     
     // Update with empty defaults rather than deleting completely
