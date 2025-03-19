@@ -135,7 +135,7 @@
     color: #333;
 }
 
-.airtable-title {
+.airtable-field-label {
     color: #ff0000 !important; /* Bright red title with !important */
 }
 
