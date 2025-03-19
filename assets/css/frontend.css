@@ -135,6 +135,10 @@
     color: #333;
 }
 
+.airtable-title {
+    color: #ff0000 !important; /* Bright red title with !important */
+}
+
 /* Responsive adjustments */
 @media screen and (max-width: 768px) {
     .airtable-controls {
