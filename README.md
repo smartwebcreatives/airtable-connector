@@ -12,6 +12,9 @@ A lightweight WordPress plugin that allows you to display Airtable data on your 
 - **Performance Optimization**: Built-in caching system reduces API calls
 - **Auto-Refresh**: Keep your displayed data current with configurable refresh intervals
 - **User Controls**: Optional refresh buttons and countdown timers
+- **Copyable Shortcodes**: One-click copying of shortcodes and parameters in admin interface
+- **Real-time Feedback**: Status messages for connection testing and data refresh
+- **Improved Data Browsing**: Scrollable data viewer for large datasets
 
 ## Installation
 
@@ -92,6 +95,16 @@ This sets 3 columns on desktop, 2 on tablet, 2 on mobile landscape, and 1 on mob
 | `auto_refresh_interval` | Custom refresh interval in seconds | - |
 | `id` | Custom ID for the shortcode instance | Auto-generated |
 
+## Admin Interface
+
+The plugin features an intuitive admin interface with:
+
+- **Two-Column Layout**: Settings on the left, preview and data on the right
+- **Copyable Shortcodes**: Click any shortcode or parameter to copy to clipboard
+- **Data Preview**: Real-time preview of API data with scrollable viewer
+- **Connection Testing**: Visual feedback when testing connection
+- **Parameter Documentation**: Comprehensive parameter listing with examples
+
 ## Styling
 
 The plugin includes basic responsive styles. You can customize the appearance by overriding the following CSS classes:
@@ -105,6 +118,32 @@ The plugin includes basic responsive styles. You can customize the appearance by
 - `.airtable-field`: Field container
 - `.airtable-field-label`: Field name
 - `.airtable-field-value`: Field value
+
+## File Structure
+
+```
+airtable-connector/
+├── airtable-connector.php         # Main plugin file
+├── README.md                       # Plugin documentation
+├── assets/                         # Frontend and admin assets
+│   ├── css/
+│   │   ├── admin.css               # Admin interface styles
+│   │   └── frontend.css            # Frontend styles for shortcodes
+│   └── js/
+│       ├── admin.js                # Admin interface functionality
+│       └── frontend.js             # Frontend functionality
+└── includes/                       # Plugin core functionality
+    ├── class-airtable-connector-admin.php      # Admin functionality
+    ├── class-airtable-connector-api.php        # API interaction
+    ├── class-airtable-connector-api-manager.php # Multi-API support
+    ├── class-airtable-connector-cache.php      # Caching system
+    ├── class-airtable-connector-loader.php     # Component loader
+    ├── class-airtable-connector-options.php    # Options management
+    ├── class-airtable-connector-shortcode.php  # Shortcode handling
+    └── templates/                  # Template files
+        ├── admin-settings.php      # Admin settings page template
+        └── shortcode-display-component.php     # Shortcode display component
+```
 
 ## Troubleshooting
 
@@ -130,6 +169,60 @@ The plugin includes basic responsive styles. You can customize the appearance by
    - Check for special characters in field names
    - Inspect browser console for JavaScript errors
 
+## Future Development Recommendations
+
+### Code Organization Improvements
+
+1. **Add Documentation Headers**
+   ```php
+   /**
+    * Airtable Connector Shortcode Handler
+    *
+    * @package    Airtable_Connector
+    * @author     Your Name
+    * @version    1.2.0
+    */
+   ```
+
+2. **Add Asset Versioning**
+   ```php
+   wp_enqueue_style(
+       'airtable-connector-admin', 
+       AIRTABLE_CONNECTOR_PLUGIN_URL . 'assets/css/admin.css',
+       [],
+       AIRTABLE_CONNECTOR_VERSION // Use plugin version for cache busting
+   );
+   ```
+
+3. **Create Uninstall Hook**
+   ```php
+   // in uninstall.php
+   if (!defined('WP_UNINSTALL_PLUGIN')) {
+       exit;
+   }
+   delete_option('airtable_connector_options');
+   ```
+
+### Performance Enhancements
+
+1. **Implement API Rate Limiting**
+   - Add logic to prevent excessive API calls
+   - Track API usage and provide user feedback
+
+2. **Add Error Logging**
+   - Implement proper error handling and logging
+   - Provide detailed troubleshooting information
+
+### User Experience Improvements
+
+1. **Welcome Screen for New Users**
+   - Add onboarding process for first-time setup
+   - Include getting started guide and examples
+
+2. **Settings Import/Export**
+   - Allow users to backup and restore plugin settings
+   - Simplify migration between sites
+
 ## Upcoming Features
 
 - Multiple API connections with independent settings
@@ -137,10 +230,6 @@ The plugin includes basic responsive styles. You can customize the appearance by
 - Advanced display templates and formatting options
 - Direct frontend editing capabilities
 - Custom field type handling (attachments, linked records, etc.)
-
-## Developer Notes
-
-The plugin uses a simple numeric ID system for shortcodes (e.g., `[airtable-001]`). This makes it easy for users to reference their connections and simplifies future multi-API support.
 
 ## License
 
@@ -159,3 +248,11 @@ Developed by Jerry
 - Added numeric ID system for simplified shortcodes
 - Improved responsive grid layout with custom column settings
 - Enhanced admin interface with clearer shortcode documentation
+
+### 1.2.0
+- Improved admin UI with two-column layout
+- Added copyable shortcodes and parameters
+- Added scrollable data viewer for large datasets
+- Added success/error feedback for connection testing
+- Enhanced shortcode parameter documentation
+- Added "fetch data" functionality for quick data refresh
