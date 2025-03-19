@@ -99,7 +99,8 @@
 }
 
 .refresh-data-link.refreshing .dashicons {
-    animation: rotation 2s infinite linear;
+    /* Remove the animation */
+    color: #999;
 }
 
 /* Layout and structure */
