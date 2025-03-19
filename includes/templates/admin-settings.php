@@ -1,6 +1,8 @@
 <?php
 /**
  * Admin settings template
+ *
+ * @package Airtable_Connector
  */
 
 // Exit if accessed directly
@@ -44,6 +46,19 @@ $options = $options ?? [];
                                 </p>
                             </td>
                         </tr>
+                        <?php if (!empty($options['numeric_id'])) : ?>
+                        <tr>
+                            <th scope="row">
+                                <?php _e('Numeric ID', 'airtable-connector'); ?>
+                            </th>
+                            <td>
+                                <code><?php echo esc_html($options['numeric_id']); ?></code>
+                                <p class="description">
+                                    <?php _e('Simplified numeric identifier. Use in shortcodes: [airtable-', 'airtable-connector'); ?><?php echo esc_html($options['numeric_id']); ?>]
+                                </p>
+                            </td>
+                        </tr>
+                        <?php endif; ?>
                         <?php if (!empty($options['api_id'])) : ?>
                         <tr>
                             <th scope="row">
@@ -52,7 +67,7 @@ $options = $options ?? [];
                             <td>
                                 <code><?php echo esc_html($options['api_id']); ?></code>
                                 <p class="description">
-                                    <?php _e('Use in shortcodes: [airtable-', 'airtable-connector'); ?><?php echo esc_html($options['api_id']); ?>]
+                                    <?php _e('Internal identifier (for development use only)', 'airtable-connector'); ?>
                                 </p>
                             </td>
                         </tr>
@@ -274,20 +289,22 @@ $options = $options ?? [];
                         <?php _e('Use these shortcodes to display data:', 'airtable-connector'); ?>
                     </p>
                     <ul>
-                        <li><code>[airtable_simple]</code> - <?php _e('Standard shortcode (works with any API)', 'airtable-connector'); ?></li>
-                        
-                        <?php if (!empty($options['api_id'])): ?>
-                        <li><code>[airtable-<?php echo esc_html($options['api_id']); ?>]</code> - <?php _e('ID-based shortcode', 'airtable-connector'); ?></li>
-                        <li><code>[show_refresh_button-<?php echo esc_html($options['api_id']); ?>]</code> - <?php _e('Refresh button for this API', 'airtable-connector'); ?></li>
+                        <?php if (!empty($options['numeric_id'])) : ?>
+                        <li><code>[airtable-<?php echo esc_html($options['numeric_id']); ?>]</code> - <?php _e('Numeric shortcode (recommended)', 'airtable-connector'); ?></li>
+                        <li><code>[refresh-<?php echo esc_html($options['numeric_id']); ?>]</code> - <?php _e('Refresh button for this connection', 'airtable-connector'); ?></li>
                         <?php endif; ?>
+                        <li><code>[airtable_simple]</code> - <?php _e('Standard shortcode (works with any configuration)', 'airtable-connector'); ?></li>
                     </ul>
                     <p class="description">
                         <?php _e('Parameters:', 'airtable-connector'); ?><br>
                         <code>title</code> - <?php _e('Title to display above the data', 'airtable-connector'); ?><br>
                         <code>columns</code> - <?php _e('Number of columns to display (default: 3)', 'airtable-connector'); ?><br>
+                        <code>grid</code> - <?php _e('Responsive grid settings (e.g., "d3,t2,ml2,m1")', 'airtable-connector'); ?><br>
                         <code>filter_field</code> - <?php _e('Override the filter field setting', 'airtable-connector'); ?><br>
                         <code>filter_value</code> - <?php _e('Override the filter value setting', 'airtable-connector'); ?><br>
-                        <code>refresh</code> - <?php _e('Set to "yes" to bypass cache (default: "no")', 'airtable-connector'); ?>
+                        <code>refresh</code> - <?php _e('Set to "yes" to bypass cache (default: "no")', 'airtable-connector'); ?><br>
+                        <code>show_refresh_button</code> - <?php _e('Set to "yes" to show a refresh button', 'airtable-connector'); ?><br>
+                        <code>show_countdown</code> - <?php _e('Set to "yes" to show a countdown timer', 'airtable-connector'); ?>
                     </p>
                 </div>
                 
@@ -295,12 +312,12 @@ $options = $options ?? [];
                 <div class="airtable-card">
                     <h2><?php _e('API Connections', 'airtable-connector'); ?></h2>
                     <p>
-                        <?php _e('Currently configured API:', 'airtable-connector'); ?>
+                        <?php _e('Currently configured connection:', 'airtable-connector'); ?>
                     </p>
                     <table class="widefat">
                         <thead>
                             <tr>
-                                <th><?php _e('ID', 'airtable-connector'); ?></th>
+                                <th><?php _e('Numeric ID', 'airtable-connector'); ?></th>
                                 <th><?php _e('Name', 'airtable-connector'); ?></th>
                                 <th><?php _e('Type', 'airtable-connector'); ?></th>
                                 <th><?php _e('Shortcode', 'airtable-connector'); ?></th>
@@ -309,10 +326,10 @@ $options = $options ?? [];
                         </thead>
                         <tbody>
                             <tr>
-                                <td><?php echo esc_html($options['api_id'] ?? '1'); ?></td>
+                                <td><?php echo esc_html($options['numeric_id'] ?? '001'); ?></td>
                                 <td><?php echo esc_html($options['api_title'] ?? 'Default API'); ?></td>
                                 <td>Airtable</td>
-                                <td><code>[airtable-<?php echo esc_html($options['api_id'] ?? '1'); ?>]</code></td>
+                                <td><code>[airtable-<?php echo esc_html($options['numeric_id'] ?? '001'); ?>]</code></td>
                                 <td><span class="dashicons dashicons-yes-alt" style="color: green;"></span> <?php _e('Active', 'airtable-connector'); ?></td>
                             </tr>
                         </tbody>
@@ -339,9 +356,6 @@ $options = $options ?? [];
                             <li><?php _e('An extendable settings structure that can hold multiple API configurations', 'airtable-connector'); ?></li>
                             <li><?php _e('Type identifier to distinguish between different API sources', 'airtable-connector'); ?></li>
                         </ul>
-                        <p>
-                            <em><?php _e('These notes can be removed when implementing the full multi-API functionality.', 'airtable-connector'); ?></em>
-                        </p>
                     </div>
                 </div>
                 

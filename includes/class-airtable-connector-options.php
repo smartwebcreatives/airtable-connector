@@ -27,11 +27,12 @@ class Airtable_Connector_Options {
             $api_id = isset($options['api_id']) ? $options['api_id'] : 'api_' . uniqid();
             $api_title = isset($options['api_title']) ? $options['api_title'] : 'Default API';
             
-            // Create the new structure
+            // Create the new structure with numeric ID
             $apis = [
                 $api_id => [
                     'api_title' => $api_title,
                     'api_id' => $api_id,
+                    'numeric_id' => '001', // Add numeric ID starting with 001
                     'api_key' => $options['api_key'] ?? '',
                     'base_id' => $options['base_id'] ?? '',
                     'table_name' => $options['table_name'] ?? '',
@@ -76,10 +77,12 @@ class Airtable_Connector_Options {
         }
         
         // If this is the first API and none exist yet
-        if (empty($apis)) {
-            $default_api = [
-                'api_title' => 'Default API',
-                'api_id' => 'api_' . uniqid(),
+       // If this is the first API and none exist yet
+if (empty($apis)) {
+    $default_api = [
+        'api_title' => 'Default API',
+        'api_id' => 'api_' . uniqid(),
+        'numeric_id' => '001', // Add numeric ID
                 'api_key' => '',
                 'base_id' => '',
                 'table_name' => '',
@@ -143,4 +146,24 @@ class Airtable_Connector_Options {
         
         return false;
     }
+
+    /**
+ * Get the next available numeric ID
+ */
+public static function get_next_numeric_id() {
+    $apis = self::get_all_apis();
+    $highest_id = 0;
+    
+    foreach ($apis as $api) {
+        if (isset($api['numeric_id'])) {
+            $numeric = intval($api['numeric_id']);
+            if ($numeric > $highest_id) {
+                $highest_id = $numeric;
+            }
+        }
+    }
+    
+    // Next ID is highest + 1, formatted as 3 digits
+    return sprintf('%03d', $highest_id + 1);
+}
 }

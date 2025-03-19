@@ -239,15 +239,21 @@ private function generate_new_api_id() {
         // Ensure all expected keys exist in the options array
         $options = wp_parse_args($options, $default_options);
         
-        // Check for POST submission - more explicit check for the submit button
+       // Check for POST submission - more explicit check for the submit button
 if (isset($_POST['submit']) || isset($_POST['save_settings'])) {
-    // Add these two lines at the beginning of this section:
     // API settings
     $options['api_title'] = isset($_POST['api_title']) ? sanitize_text_field($_POST['api_title']) : 'Default API';
     
     // Generate API ID if it doesn't exist
     if (empty($options['api_id'])) {
         $options['api_id'] = 'api_' . uniqid();
+    }
+    
+    // Generate numeric ID if it doesn't exist
+    if (empty($options['numeric_id'])) {
+        // Include options class if not already included
+        require_once AIRTABLE_CONNECTOR_PLUGIN_DIR . 'includes/class-airtable-connector-options.php';
+        $options['numeric_id'] = Airtable_Connector_Options::get_next_numeric_id();
     }
     
     // Original code continues here:

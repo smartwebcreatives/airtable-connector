@@ -39,17 +39,17 @@ public function __construct($api, $cache = null) {
     // Register the standard shortcode
     add_shortcode('airtable_simple', [$this, 'shortcode_handler']);
     
-    // Register shortcode using the simple ID
-    if (!empty($options['api_id'])) {
-        add_shortcode('airtable-' . $options['api_id'], [$this, 'shortcode_handler']);
+    // Register numeric shortcode if available
+    if (!empty($options['numeric_id'])) {
+        add_shortcode('airtable-' . $options['numeric_id'], [$this, 'shortcode_handler']);
     }
     
     // Register refresh button shortcode
     add_shortcode('show_refresh_button', [$this, 'refresh_button_shortcode']);
     
-    // Register ID-specific refresh button shortcode
-    if (!empty($options['api_id'])) {
-        add_shortcode('show_refresh_button-' . $options['api_id'], [$this, 'refresh_button_shortcode']);
+    // Register numeric refresh button shortcode
+    if (!empty($options['numeric_id'])) {
+        add_shortcode('refresh-' . $options['numeric_id'], [$this, 'refresh_button_shortcode']);
     }
 }
     
