@@ -283,6 +283,7 @@ $options = $options ?? [];
                 </div>
                 
                 <!-- Shortcode Usage -->
+<!-- Shortcode Usage -->
 <div class="airtable-card">
     <h2><?php _e('Shortcode Usage', 'airtable-connector'); ?></h2>
     <p>
@@ -292,8 +293,9 @@ $options = $options ?? [];
         <?php if (!empty($options['numeric_id'])) : ?>
         <li><code>[airtable-<?php echo esc_html($options['numeric_id']); ?>]</code> - <?php _e('Numeric shortcode (recommended)', 'airtable-connector'); ?></li>
         <li><code>[refresh-<?php echo esc_html($options['numeric_id']); ?>]</code> - <?php _e('Refresh button for this connection', 'airtable-connector'); ?></li>
-        <?php endif; ?>
+        <?php else: ?>
         <li><code>[airtable_simple]</code> - <?php _e('Standard shortcode (works with any configuration)', 'airtable-connector'); ?></li>
+        <?php endif; ?>
     </ul>
     <p class="description">
         <?php _e('Parameters:', 'airtable-connector'); ?><br>
