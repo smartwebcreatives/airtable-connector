@@ -1,7 +1,71 @@
 /**
  * Admin JavaScript for Airtable Connector
  */
+
+// Shortcode clipboard functionality
+function initializeShortcodeClipboard() {
+    // Handle click on shortcode elements
+    document.querySelectorAll('#shortcode-display code').forEach(function(element) {
+        element.addEventListener('click', function() {
+            copyToClipboard(this.textContent);
+            showCopiedMessage(this);
+        });
+    });
+    
+    // Handle click on copy buttons
+    document.querySelectorAll('.shortcode-copy-button').forEach(function(button) {
+        button.addEventListener('click', function() {
+            const targetId = this.getAttribute('data-clipboard-target');
+            const shortcodeElement = document.querySelector(targetId);
+            if (shortcodeElement) {
+                copyToClipboard(shortcodeElement.textContent);
+                showCopiedMessage(shortcodeElement);
+            }
+        });
+    });
+}
+
+// Copy text to clipboard
+function copyToClipboard(text) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+}
+
+// Show copied message
+function showCopiedMessage(element) {
+    // Remove any existing copied messages
+    document.querySelectorAll('.shortcode-copied').forEach(function(msg) {
+        msg.remove();
+    });
+    
+    // Create and add the copied message
+    const message = document.createElement('span');
+    message.className = 'shortcode-copied';
+    message.textContent = 'Copied!';
+    element.parentNode.appendChild(message);
+    
+    // Make it visible (animate)
+    setTimeout(function() {
+        message.classList.add('visible');
+    }, 10);
+    
+    // Remove after a delay
+    setTimeout(function() {
+        message.classList.remove('visible');
+        setTimeout(function() {
+            message.remove();
+        }, 300);
+    }, 2000);
+}
+
 jQuery(document).ready(function($) {
+// Initialize shortcode clipboard functionality
+initializeShortcodeClipboard();
+
     // Handle adding new filter
     $('#add-filter').on('click', function(e) {
         e.preventDefault();

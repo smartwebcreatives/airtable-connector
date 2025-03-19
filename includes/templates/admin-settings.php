@@ -353,9 +353,16 @@ $options = $options ?? [];
         </div>
         
         <!-- Data Column -->
-        <div class="airtable-column">
-            <div class="airtable-card" id="api-response-container">
-                <h2><?php _e('API Response', 'airtable-connector'); ?></h2>
+      <!-- Data Column -->
+<div class="airtable-column">
+    <?php 
+    // Include the shortcode display component
+    require_once AIRTABLE_CONNECTOR_PLUGIN_DIR . 'includes/templates/shortcode-display-component.php';
+    airtable_connector_render_shortcode_display($options['numeric_id'] ?? '001');
+    ?>
+    
+    <div class="airtable-card" id="api-response-container">
+        <h2><?php _e('API Response', 'airtable-connector'); ?></h2>
                 
                 <div id="api-response-content">
                     <?php 
