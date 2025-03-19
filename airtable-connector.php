@@ -119,36 +119,143 @@ function airtable_connector_deactivate() {
 // At the end of your airtable-connector.php file, add this line:
 add_action('plugins_loaded', 'airtable_connector_init');
 
-// Add inline CSS for card styling
+/**
+ * Add inline CSS styles with maximum specificity for Airtable Connector
+ * Add this function to your theme's functions.php or the main plugin file
+ */
 function airtable_connector_add_inline_styles() {
     echo '<style>
+    /* Container styling */
+    html body div.airtable-connector-container {
+        margin: 2rem 0 !important;
+        font-size: inherit !important;
+        line-height: 1.5 !important;
+        color: #333 !important;
+    }
+
+    /* Title styling */
+    html body div.airtable-connector-container h2.airtable-title {
+        margin-top: 0 !important;
+        margin-bottom: 1rem !important;
+        font-size: 1.5rem !important;
+        font-weight: 600 !important;
+        color: #333 !important;
+    }
+
+    /* Filter information styling */
+    html body div.airtable-connector-container div.airtable-filter-info {
+        margin-bottom: 1rem !important;
+        font-style: italic !important;
+        color: #666 !important;
+        font-size: 0.9rem !important;
+    }
+
+    /* Controls section styling */
+    html body div.airtable-connector-container div.airtable-controls {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        margin-bottom: 1.5rem !important;
+        padding: 0.75rem 1rem !important;
+        background-color: #f8f9fa !important;
+        border: 1px solid #e9ecef !important;
+        border-radius: 4px !important;
+    }
+
+    /* Update button styling */
+    html body div.airtable-connector-container button.airtable-update-now {
+        background-color: #f1f3f5 !important;
+        color: #495057 !important;
+        border: 1px solid #dee2e6 !important;
+        padding: 0.5rem 1rem !important;
+        border-radius: 4px !important;
+        cursor: pointer !important;
+        font-size: 0.9rem !important;
+        transition: all 0.2s ease !important;
+    }
+
+    html body div.airtable-connector-container button.airtable-update-now:hover {
+        background-color: #e9ecef !important;
+        border-color: #ced4da !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+    }
+
+    /* Grid layout */
+    html body div.airtable-connector-container div.airtable-grid {
+        display: grid !important;
+        gap: 1.5rem !important;
+    }
+
     /* Card styling with maximum specificity */
     html body div.airtable-connector-container div.airtable-item {
-        border: 2px solid #e0e0e0 !important;
-        border-radius: 8px !important;
-        padding: 20px !important;
-        background-color: #ffffff !important;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
-        margin-bottom: 15px !important;
+        border: 1px solid #e9ecef !important;
+        padding: 1.25rem !important;
+        background-color: #fff !important;
+        border-radius: 6px !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+        transition: all 0.2s ease !important;
     }
 
     /* Force the hover effect */
     html body div.airtable-connector-container div.airtable-item:hover {
-        transform: translateY(-3px) !important;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15) !important;
-        transition: all 0.3s ease !important;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06) !important;
+        transform: translateY(-2px) !important;
     }
 
     /* Apply field styling */
     html body div.airtable-connector-container div.airtable-field {
-        padding-bottom: 10px !important;
-        border-bottom: 1px solid #f0f0f0 !important;
-        margin-bottom: 10px !important;
+        margin-bottom: 0.75rem !important;
+        padding-bottom: 0.75rem !important;
+        border-bottom: 1px solid #f5f5f5 !important;
     }
 
-    /* Ensure grid spacing */
-    html body div.airtable-connector-container div.airtable-grid {
-        gap: 24px !important;
+    html body div.airtable-connector-container div.airtable-field:last-child {
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+        border-bottom: none !important;
+    }
+
+    /* Field label styling */
+    html body div.airtable-connector-container span.airtable-field-label {
+        font-weight: 600 !important;
+        color: #495057 !important;
+        margin-right: 0.25rem !important;
+    }
+
+    /* Refresh button shortcode styling */
+    html body a.button {
+        display: inline-block !important;
+        background-color: #f1f3f5 !important;
+        color: #495057 !important;
+        text-decoration: none !important;
+        padding: 0.5rem 1rem !important;
+        border-radius: 4px !important;
+        border: 1px solid #dee2e6 !important;
+        font-size: 0.9rem !important;
+        transition: all 0.2s ease !important;
+    }
+
+    html body a.button:hover {
+        background-color: #e9ecef !important;
+        border-color: #ced4da !important;
+        text-decoration: none !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+    }
+
+    /* Responsive adjustments */
+    @media screen and (max-width: 768px) {
+        html body div.airtable-connector-container div.airtable-controls {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+        }
+        
+        html body div.airtable-connector-container div.airtable-controls > div,
+        html body div.airtable-connector-container div.airtable-controls > button {
+            margin-bottom: 0.75rem !important;
+        }
     }
     </style>';
 }
