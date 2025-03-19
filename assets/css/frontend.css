@@ -1,6 +1,6 @@
 /**
  * Frontend CSS for Airtable Connector
- * Clean, minimalistic design with subtle styling
+ * Clean, minimalistic design with subtle styling and proper specificity
  */
 
 /* Container */
@@ -11,34 +11,41 @@
     color: #333;
   }
   
+  /* Ensure all text inherits theme body size */
+  .airtable-connector-container,
+  .airtable-connector-container div,
+  .airtable-connector-container span,
+  .airtable-connector-container button {
+    font-size: inherit;
+  }
+  
   /* Header */
-  .airtable-title {
+  .airtable-connector-container .airtable-title {
     margin-top: 0;
     margin-bottom: 1rem;
-    font-size: 1.5rem;
+    font-size: 1.2em;
     font-weight: 600;
     color: #333;
   }
   
   /* Filter information */
-  .airtable-filter-info {
+  .airtable-connector-container .airtable-filter-info {
     margin-bottom: 1rem;
     font-style: italic;
     color: #666;
-    font-size: 0.9rem;
   }
   
-  .airtable-filter-list {
+  .airtable-connector-container .airtable-filter-list {
     margin: 0.5rem 0 0.75rem 1.25rem;
     padding-left: 1rem;
   }
   
-  .airtable-record-count {
+  .airtable-connector-container .airtable-record-count {
     font-weight: 600;
   }
   
   /* Controls section */
-  .airtable-controls {
+  .airtable-connector-container .airtable-controls {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -51,36 +58,34 @@
   }
   
   /* Last updated */
-  .airtable-last-updated {
+  .airtable-connector-container .airtable-last-updated {
     color: #6c757d;
-    font-size: 0.9rem;
   }
   
-  .airtable-last-updated span {
+  .airtable-connector-container .airtable-last-updated span {
     font-weight: 600;
     color: #495057;
   }
   
   /* Update now button */
-  .airtable-update-now {
+  .airtable-connector-container .airtable-update-now {
     background-color: #f1f3f5;
     color: #495057;
     border: 1px solid #dee2e6;
     padding: 0.5rem 1rem;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 0.9rem;
     transition: all 0.2s ease;
   }
   
-  .airtable-update-now:hover {
+  .airtable-connector-container .airtable-update-now:hover {
     background-color: #e9ecef;
     border-color: #ced4da;
     transform: translateY(-1px);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   }
   
-  .airtable-update-now:disabled {
+  .airtable-connector-container .airtable-update-now:disabled {
     background-color: #e9ecef;
     color: #adb5bd;
     cursor: not-allowed;
@@ -89,24 +94,23 @@
   }
   
   /* Countdown timer */
-  .airtable-countdown {
+  .airtable-connector-container .airtable-countdown {
     color: #6c757d;
-    font-size: 0.9rem;
   }
   
-  .airtable-timer {
+  .airtable-connector-container .airtable-timer {
     font-weight: 600;
     color: #495057;
   }
   
   /* Grid layout */
-  .airtable-grid {
+  .airtable-connector-container .airtable-grid {
     display: grid;
     gap: 1.5rem;
   }
   
   /* Grid items */
-  .airtable-item {
+  .airtable-connector-container .airtable-item {
     border: 1px solid #e9ecef;
     padding: 1.25rem;
     background-color: #fff;
@@ -115,36 +119,42 @@
     transition: all 0.2s ease;
   }
   
-  .airtable-item:hover {
+  .airtable-connector-container .airtable-item:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
     transform: translateY(-2px);
   }
   
   /* Field styling */
-  .airtable-field {
+  .airtable-connector-container .airtable-field {
     margin-bottom: 0.75rem;
     padding-bottom: 0.75rem;
     border-bottom: 1px solid #f5f5f5;
   }
   
-  .airtable-field:last-child {
+  .airtable-connector-container .airtable-field:last-child {
     margin-bottom: 0;
     padding-bottom: 0;
     border-bottom: none;
   }
   
-  .airtable-field-label {
+  .airtable-connector-container .airtable-field-label {
     font-weight: 600;
     color: #495057;
     margin-right: 0.25rem;
   }
   
-  .airtable-field-value {
+  .airtable-connector-container .airtable-field-value {
     color: #333;
   }
   
   /* Refresh button shortcode styling */
-  a.button {
+  .refresh-001, .refresh-002, .refresh-003 {
+    display: inline-block;
+  }
+  
+  .refresh-001 a.button, 
+  .refresh-002 a.button, 
+  .refresh-003 a.button {
     display: inline-block;
     background-color: #f1f3f5;
     color: #495057;
@@ -152,11 +162,12 @@
     padding: 0.5rem 1rem;
     border-radius: 4px;
     border: 1px solid #dee2e6;
-    font-size: 0.9rem;
     transition: all 0.2s ease;
   }
   
-  a.button:hover {
+  .refresh-001 a.button:hover,
+  .refresh-002 a.button:hover,
+  .refresh-003 a.button:hover {
     background-color: #e9ecef;
     border-color: #ced4da;
     text-decoration: none;
@@ -166,17 +177,17 @@
   
   /* Responsive adjustments */
   @media screen and (max-width: 768px) {
-    .airtable-controls {
+    .airtable-connector-container .airtable-controls {
       flex-direction: column;
       align-items: flex-start;
     }
     
-    .airtable-controls > div,
-    .airtable-controls > button {
+    .airtable-connector-container .airtable-controls > div,
+    .airtable-connector-container .airtable-controls > button {
       margin-bottom: 0.75rem;
     }
     
-    .airtable-controls > *:last-child {
+    .airtable-connector-container .airtable-controls > *:last-child {
       margin-bottom: 0;
     }
   }
