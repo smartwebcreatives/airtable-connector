@@ -331,21 +331,7 @@ $options = $options ?? [];
         
         <!-- Data Column -->
         <div class="airtable-column">
-            <?php 
-            // Include the shortcode display component
-            $shortcode_display_path = AIRTABLE_CONNECTOR_PLUGIN_DIR . 'includes/templates/shortcode-display-component.php';
-            if (file_exists($shortcode_display_path)) {
-                require_once $shortcode_display_path;
-                airtable_connector_render_shortcode_display($options['numeric_id'] ?? '001');
-            } else {
-                // Fallback display if component file is missing
-                echo '<div class="airtable-card">';
-                echo '<h2>Airtable-' . esc_html($options['numeric_id'] ?? '001') . ' Shortcodes</h2>';
-                echo '<p>Use shortcode: <code>[airtable-' . esc_html($options['numeric_id'] ?? '001') . ']</code></p>';
-                echo '<p>Refresh button: <code>[refresh-' . esc_html($options['numeric_id'] ?? '001') . ']</code></p>';
-                echo '</div>';
-            }
-            ?>
+            <!-- Removed Shortcode Display Component Section -->
             
             <div class="airtable-card" id="api-response-container">
                 <h2><?php _e('API Response', 'airtable-connector'); ?></h2>
